@@ -20,4 +20,3 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACC_ID }}
           projectName: sarvshivam-films
           directory: .
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
