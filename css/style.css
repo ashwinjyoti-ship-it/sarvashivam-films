@@ -72,14 +72,17 @@ button { font: inherit; }
 .brand {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  align-items: flex-start;
+  gap: 8px;
 }
-.brand-mark {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.45rem;
-  letter-spacing: 0.22em;
+.brand-logo {
+  width: clamp(170px, 18vw, 250px);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 20px rgba(0,0,0,0.22));
 }
 .brand-sub {
+  padding-left: 4px;
   font-size: 0.68rem;
   letter-spacing: 0.28em;
   text-transform: uppercase;
@@ -605,6 +608,7 @@ button { font: inherit; }
     padding-bottom: 16px;
     height: auto;
   }
+  .brand-logo { width: clamp(150px, 48vw, 210px); }
   .nav-links { justify-content: flex-start; gap: 14px; }
   .hero::after {
     right: -6%;
