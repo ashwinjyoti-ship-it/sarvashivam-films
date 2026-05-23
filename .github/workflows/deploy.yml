@@ -4,27 +4,14 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
-
-permissions:
-  contents: read
-
-defaults:
-  run:
-    shell: bash
-
-concurrency:
-  group: cloudflare-pages-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   deploy:
-    name: Deploy to Cloudflare Pages
     runs-on: ubuntu-latest
-
+    name: Deploy to Cloudflare Pages
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
