@@ -8,7 +8,7 @@
     shield.id = 'ss-entry-shield';
     shield.setAttribute('aria-hidden', 'true');
     shield.style.cssText =
-      'position:fixed;inset:0;background:#020202;z-index:2147483646;pointer-events:auto;opacity:1';
+      'position:fixed;inset:0;min-height:100vh;min-height:100dvh;background:#020202;z-index:2147483646;pointer-events:auto;opacity:1';
     function mount() {
       if (!document.body) {
         requestAnimationFrame(mount);
