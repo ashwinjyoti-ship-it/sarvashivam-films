@@ -44,12 +44,56 @@ body::before {
 
 body.home-page {
   background: #000000;
+  --beam-apex-x: 63%;
+  --beam-hot: rgba(255, 236, 198, 0.46);
+  --beam-mid: rgba(198, 158, 98, 0.30);
+  --beam-soft: rgba(118, 90, 52, 0.14);
 }
 body.home-page::before {
-  display: none;
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.08;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.14) 0.6px, transparent 0.8px),
+    radial-gradient(circle at 60% 80%, rgba(255,255,255,0.08) 0.6px, transparent 0.8px),
+    radial-gradient(circle at 85% 40%, rgba(184,160,106,0.09) 0.7px, transparent 0.9px);
+  background-size: 180px 180px, 220px 220px, 260px 260px;
+  mix-blend-mode: screen;
 }
 body.home-page::after {
-  display: none;
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 224, 168, 0.20) 0%,
+      rgba(178, 140, 84, 0.12) 30%,
+      rgba(92, 70, 40, 0.06) 56%,
+      transparent 90%
+    ),
+    conic-gradient(
+      from 204deg at var(--beam-apex-x) -5%,
+      transparent 0deg,
+      var(--beam-hot) 5deg,
+      rgba(220, 178, 112, 0.38) 9deg,
+      var(--beam-mid) 13deg,
+      var(--beam-soft) 18deg,
+      rgba(62, 48, 28, 0.07) 22deg,
+      transparent 28deg
+    ),
+    radial-gradient(
+      ellipse 28% 12% at var(--beam-apex-x) -1%,
+      rgba(255, 242, 212, 0.66) 0%,
+      rgba(225, 190, 132, 0.36) 36%,
+      rgba(168, 132, 78, 0.14) 58%,
+      transparent 76%
+    );
 }
 
 a { color: inherit; text-decoration: none; }
@@ -282,7 +326,7 @@ button { font: inherit; }
   align-items: center;
 }
 .home-page .hero::before {
-  background: #000000;
+  background: transparent;
 }
 .home-page .hero::after {
   display: none;
@@ -711,8 +755,40 @@ button { font: inherit; }
     justify-content: flex-end;
     padding-top: 2px;
   }
+  body.home-page {
+    --beam-apex-x: 58%;
+    --beam-hot: rgba(255, 236, 198, 0.36);
+    --beam-mid: rgba(198, 158, 98, 0.22);
+    --beam-soft: rgba(118, 90, 52, 0.10);
+  }
+  body.home-page::after {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 224, 168, 0.16) 0%,
+        rgba(178, 140, 84, 0.09) 28%,
+        rgba(92, 70, 40, 0.05) 52%,
+        transparent 88%
+      ),
+      conic-gradient(
+        from 202deg at var(--beam-apex-x) -4%,
+        transparent 0deg,
+        var(--beam-hot) 5deg,
+        rgba(220, 178, 112, 0.30) 9deg,
+        var(--beam-mid) 14deg,
+        var(--beam-soft) 19deg,
+        rgba(62, 48, 28, 0.06) 23deg,
+        transparent 29deg
+      ),
+      radial-gradient(
+        ellipse 34% 14% at var(--beam-apex-x) 0%,
+        rgba(255, 242, 212, 0.52) 0%,
+        rgba(225, 190, 132, 0.28) 38%,
+        transparent 74%
+      );
+  }
   .home-page .hero::before {
-    background: #000000;
+    background: transparent;
   }
   .home-page .hero-content {
     padding: 0 24px;
