@@ -45,20 +45,25 @@ body::before {
   mix-blend-mode: screen;
 }
 
-body.home-page {
+body.home-page,
+body.founder-page {
   background: #000000;
   --beam-apex-x: 70%;
-  --beam-hot: rgba(255, 236, 198, 0.44);
-  --beam-mid: rgba(198, 158, 98, 0.285);
-  --beam-soft: rgba(118, 90, 52, 0.13);
+  --beam-hot: rgba(255, 236, 198, 0.08);
+  --beam-mid: rgba(198, 158, 98, 0.05);
+  --beam-soft: rgba(118, 90, 52, 0.025);
+  --beam-fade-top: rgba(255, 224, 168, 0.035);
+  --beam-fade-mid: rgba(178, 140, 84, 0.022);
+  --beam-fade-low: rgba(92, 70, 40, 0.012);
 }
-body.home-page::before {
+body.home-page::before,
+body.founder-page::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.08;
+  opacity: 0.06;
   background-image:
     radial-gradient(circle at 20% 20%, rgba(255,255,255,0.14) 0.6px, transparent 0.8px),
     radial-gradient(circle at 60% 80%, rgba(255,255,255,0.08) 0.6px, transparent 0.8px),
@@ -66,7 +71,8 @@ body.home-page::before {
   background-size: 180px 180px, 220px 220px, 260px 260px;
   mix-blend-mode: screen;
 }
-body.home-page::after {
+body.home-page::after,
+body.founder-page::after {
   content: "";
   position: fixed;
   inset: 0;
@@ -75,9 +81,9 @@ body.home-page::after {
   background:
     linear-gradient(
       180deg,
-      rgba(255, 224, 168, 0.19) 0%,
-      rgba(178, 140, 84, 0.114) 30%,
-      rgba(92, 70, 40, 0.057) 56%,
+      var(--beam-fade-top) 0%,
+      var(--beam-fade-mid) 30%,
+      var(--beam-fade-low) 56%,
       transparent 90%
     ),
     conic-gradient(
@@ -90,6 +96,14 @@ body.home-page::after {
       var(--beam-soft) 192deg,
       transparent 204deg
     );
+}
+
+body.founder-page .founder-grid {
+  grid-template-columns: 1fr;
+  max-width: 760px;
+}
+body.founder-page .site-header {
+  background: linear-gradient(180deg, rgba(0,0,0,0.72), rgba(0,0,0,0.2));
 }
 
 a { color: inherit; text-decoration: none; }
@@ -784,19 +798,24 @@ button { font: inherit; }
     justify-content: flex-start;
     padding-top: 0;
   }
-  body.home-page {
+  body.home-page,
+  body.founder-page {
     --beam-apex-x: 76%;
-    --beam-hot: rgba(255, 236, 198, 0.34);
-    --beam-mid: rgba(198, 158, 98, 0.21);
-    --beam-soft: rgba(118, 90, 52, 0.10);
+    --beam-hot: rgba(255, 236, 198, 0.062);
+    --beam-mid: rgba(198, 158, 98, 0.038);
+    --beam-soft: rgba(118, 90, 52, 0.018);
+    --beam-fade-top: rgba(255, 224, 168, 0.028);
+    --beam-fade-mid: rgba(178, 140, 84, 0.017);
+    --beam-fade-low: rgba(92, 70, 40, 0.009);
   }
-  body.home-page::after {
+  body.home-page::after,
+  body.founder-page::after {
     background:
       linear-gradient(
         180deg,
-        rgba(255, 224, 168, 0.15) 0%,
-        rgba(178, 140, 84, 0.085) 28%,
-        rgba(92, 70, 40, 0.048) 52%,
+        var(--beam-fade-top) 0%,
+        var(--beam-fade-mid) 28%,
+        var(--beam-fade-low) 52%,
         transparent 88%
       ),
       conic-gradient(
@@ -856,7 +875,6 @@ button { font: inherit; }
   .quote-block,
   .timeline-item,
   .metric { padding: 22px; border-radius: 20px; }
-  .silhouette { min-height: 360px; }
   .ring-wrap { min-height: 300px; }
   .ring { width: min(72vw, 280px); }
   .footer {
@@ -881,5 +899,6 @@ button { font: inherit; }
   .home-page .hero-title {
     font-size: clamp(2.2rem, 11.5vw, 3.2rem);
   }
-  body.home-page { --beam-apex-x: 78%; }
+  body.home-page,
+  body.founder-page { --beam-apex-x: 78%; }
 }
