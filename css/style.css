@@ -48,6 +48,8 @@ body::before {
 body.home-page,
 body.founder-page {
   background: #000000;
+}
+body.founder-page {
   --beam-apex-x: 70%;
   --beam-hot: rgba(255, 236, 198, 0.08);
   --beam-mid: rgba(198, 158, 98, 0.05);
@@ -55,6 +57,15 @@ body.founder-page {
   --beam-fade-top: rgba(255, 224, 168, 0.035);
   --beam-fade-mid: rgba(178, 140, 84, 0.022);
   --beam-fade-low: rgba(92, 70, 40, 0.012);
+}
+body.home-page {
+  --beam-apex-x: 67%;
+  --beam-hot: rgba(255, 236, 198, 0.10);
+  --beam-mid: rgba(198, 158, 98, 0.07);
+  --beam-soft: rgba(118, 90, 52, 0.045);
+  --beam-fade-top: rgba(255, 224, 168, 0.055);
+  --beam-fade-mid: rgba(178, 140, 84, 0.042);
+  --beam-fade-low: rgba(92, 70, 40, 0.032);
 }
 body.home-page::before,
 body.founder-page::before {
@@ -71,7 +82,6 @@ body.founder-page::before {
   background-size: 180px 180px, 220px 220px, 260px 260px;
   mix-blend-mode: screen;
 }
-body.home-page::after,
 body.founder-page::after {
   content: "";
   position: fixed;
@@ -95,6 +105,41 @@ body.founder-page::after {
       var(--beam-mid) 184deg,
       var(--beam-soft) 192deg,
       transparent 204deg
+    );
+}
+body.home-page::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    linear-gradient(
+      180deg,
+      var(--beam-fade-top) 0%,
+      var(--beam-fade-mid) 30%,
+      var(--beam-fade-low) 56%,
+      transparent 90%
+    ),
+    conic-gradient(
+      from 0deg at var(--beam-apex-x) 14%,
+      transparent 146deg,
+      rgba(118, 90, 52, 0.028) 162deg,
+      rgba(198, 158, 98, 0.042) 172deg,
+      rgba(255, 236, 198, 0.05) 180deg,
+      rgba(198, 158, 98, 0.042) 188deg,
+      rgba(118, 90, 52, 0.028) 198deg,
+      transparent 214deg
+    ),
+    conic-gradient(
+      from 0deg at var(--beam-apex-x) -8%,
+      transparent 152deg,
+      var(--beam-soft) 164deg,
+      var(--beam-mid) 174deg,
+      var(--beam-hot) 180deg,
+      var(--beam-mid) 186deg,
+      var(--beam-soft) 196deg,
+      transparent 208deg
     );
 }
 
@@ -798,7 +843,6 @@ button { font: inherit; }
     justify-content: flex-start;
     padding-top: 0;
   }
-  body.home-page,
   body.founder-page {
     --beam-apex-x: 76%;
     --beam-hot: rgba(255, 236, 198, 0.062);
@@ -808,7 +852,6 @@ button { font: inherit; }
     --beam-fade-mid: rgba(178, 140, 84, 0.017);
     --beam-fade-low: rgba(92, 70, 40, 0.009);
   }
-  body.home-page::after,
   body.founder-page::after {
     background:
       linear-gradient(
@@ -827,6 +870,45 @@ button { font: inherit; }
         var(--beam-mid) 182deg,
         var(--beam-soft) 190deg,
         transparent 200deg
+      );
+  }
+  body.home-page {
+    --beam-apex-x: 73%;
+    --beam-hot: rgba(255, 236, 198, 0.082);
+    --beam-mid: rgba(198, 158, 98, 0.058);
+    --beam-soft: rgba(118, 90, 52, 0.038);
+    --beam-fade-top: rgba(255, 224, 168, 0.048);
+    --beam-fade-mid: rgba(178, 140, 84, 0.037);
+    --beam-fade-low: rgba(92, 70, 40, 0.029);
+  }
+  body.home-page::after {
+    background:
+      linear-gradient(
+        180deg,
+        var(--beam-fade-top) 0%,
+        var(--beam-fade-mid) 28%,
+        var(--beam-fade-low) 52%,
+        transparent 88%
+      ),
+      conic-gradient(
+        from 0deg at var(--beam-apex-x) 12%,
+        transparent 148deg,
+        rgba(118, 90, 52, 0.022) 164deg,
+        rgba(198, 158, 98, 0.034) 174deg,
+        rgba(255, 236, 198, 0.04) 180deg,
+        rgba(198, 158, 98, 0.034) 186deg,
+        rgba(118, 90, 52, 0.022) 196deg,
+        transparent 212deg
+      ),
+      conic-gradient(
+        from 0deg at var(--beam-apex-x) -7%,
+        transparent 154deg,
+        var(--beam-soft) 166deg,
+        var(--beam-mid) 176deg,
+        var(--beam-hot) 180deg,
+        var(--beam-mid) 184deg,
+        var(--beam-soft) 194deg,
+        transparent 206deg
       );
   }
   .home-page .hero::before {
@@ -899,6 +981,6 @@ button { font: inherit; }
   .home-page .hero-title {
     font-size: clamp(2.2rem, 11.5vw, 3.2rem);
   }
-  body.home-page,
   body.founder-page { --beam-apex-x: 78%; }
+  body.home-page { --beam-apex-x: 75%; }
 }
