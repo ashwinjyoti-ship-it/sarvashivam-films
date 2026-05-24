@@ -161,8 +161,36 @@ body.founder-page .founder-grid {
   grid-template-columns: 1fr;
   max-width: 760px;
 }
-body.founder-page .site-header {
-  background: linear-gradient(180deg, rgba(0,0,0,0.72), rgba(0,0,0,0.2));
+
+/* Inner pages — match home header: logo + subtext top-left */
+body:not(.home-page) .site-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom: none;
+}
+body:not(.home-page) .nav {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 24px clamp(24px, 3.8vw, 48px) 0;
+  align-items: flex-start;
+  height: auto;
+  min-height: var(--nav-h);
+}
+body:not(.home-page) .brand-logo {
+  width: clamp(138px, 14vw, 190px);
+  filter: drop-shadow(0 8px 28px rgba(0,0,0,0.35));
+}
+body:not(.home-page) .nav-links {
+  margin-left: auto;
+  padding-top: 6px;
+}
+body:not(.home-page) main.container.section {
+  padding-top: calc(var(--nav-h) + 28px);
 }
 
 a { color: inherit; text-decoration: none; }
@@ -852,19 +880,26 @@ html.is-ready .reveal {
     letter-spacing: 0.1em;
     overflow-wrap: anywhere;
   }
-  .home-page .nav {
+  .home-page .nav,
+  body:not(.home-page) .nav {
     flex-direction: column;
     align-items: flex-start;
     padding: 20px 20px 12px;
     gap: 14px;
   }
-  .home-page .brand-logo {
+  .home-page .brand-logo,
+  body:not(.home-page) .brand-logo {
     width: clamp(120px, 36vw, 160px);
   }
-  .home-page .nav-links {
+  .home-page .nav-links,
+  body:not(.home-page) .nav-links {
     max-width: none;
     justify-content: flex-start;
     padding-top: 0;
+    width: 100%;
+  }
+  body:not(.home-page) main.container.section {
+    padding-top: 148px;
   }
   body.founder-page {
     --beam-apex-x: 76%;
