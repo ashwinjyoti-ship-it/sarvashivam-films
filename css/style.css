@@ -101,14 +101,24 @@ body.founder-page::after {
       transparent 90%
     ),
     conic-gradient(
+      from 0deg at var(--beam-apex-x) 14%,
+      transparent 146deg,
+      rgba(118, 90, 52, 0.014) 162deg,
+      rgba(198, 158, 98, 0.028) 172deg,
+      rgba(255, 236, 198, 0.045) 180deg,
+      rgba(198, 158, 98, 0.028) 188deg,
+      rgba(118, 90, 52, 0.014) 198deg,
+      transparent 214deg
+    ),
+    conic-gradient(
       from 0deg at var(--beam-apex-x) -8%,
-      transparent 156deg,
-      var(--beam-soft) 168deg,
-      var(--beam-mid) 176deg,
+      transparent 152deg,
+      var(--beam-soft) 164deg,
+      var(--beam-mid) 174deg,
       var(--beam-hot) 180deg,
-      var(--beam-mid) 184deg,
-      var(--beam-soft) 192deg,
-      transparent 204deg
+      var(--beam-mid) 186deg,
+      var(--beam-soft) 196deg,
+      transparent 208deg
     );
 }
 body.home-page::after {
@@ -868,14 +878,24 @@ button { font: inherit; }
         transparent 88%
       ),
       conic-gradient(
+        from 0deg at var(--beam-apex-x) 12%,
+        transparent 148deg,
+        rgba(118, 90, 52, 0.011) 164deg,
+        rgba(198, 158, 98, 0.017) 174deg,
+        rgba(255, 236, 198, 0.02) 180deg,
+        rgba(198, 158, 98, 0.017) 186deg,
+        rgba(118, 90, 52, 0.011) 196deg,
+        transparent 212deg
+      ),
+      conic-gradient(
         from 0deg at var(--beam-apex-x) -7%,
-        transparent 160deg,
-        var(--beam-soft) 170deg,
-        var(--beam-mid) 178deg,
+        transparent 154deg,
+        var(--beam-soft) 166deg,
+        var(--beam-mid) 176deg,
         var(--beam-hot) 180deg,
-        var(--beam-mid) 182deg,
-        var(--beam-soft) 190deg,
-        transparent 200deg
+        var(--beam-mid) 184deg,
+        var(--beam-soft) 194deg,
+        transparent 206deg
       );
   }
   body.home-page {
