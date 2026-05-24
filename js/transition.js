@@ -11,50 +11,31 @@
     document.documentElement.style.colorScheme = 'dark';
   }
 
-  function releaseEntryCover(cover) {
-    if (!cover || !cover.isConnected) return;
-
-    function finish() {
-      if (!cover.isConnected) return;
-      cover.remove();
-      document.documentElement.style.backgroundColor = '';
-    }
-
-    cover.classList.add('fade-out');
-    cover.addEventListener('transitionend', finish, { once: true });
-    setTimeout(finish, 520);
-  }
-
-  function makeEntryCover() {
-    if (sessionStorage.getItem(ENTRY_KEY) !== '1') return;
-    sessionStorage.removeItem(ENTRY_KEY);
-    paintRootDark();
-
-    var cover = document.getElementById('ss-entry-shield');
-    if (!cover) {
-      cover = document.createElement('div');
-      cover.id = 'ss-entry-shield';
-      cover.className = 'entry-cover active';
-      cover.style.backgroundColor = COVER_COLOR;
-      cover.style.opacity = '1';
-      document.body.insertBefore(cover, document.body.firstChild);
-    } else {
-      cover.classList.add('entry-cover', 'active');
-      cover.style.opacity = '1';
-      cover.style.backgroundColor = COVER_COLOR;
-    }
-
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        setTimeout(function () {
-          releaseEntryCover(cover);
-        }, 60);
-      });
+  function unlockPage() {
+    document.documentElement.classList.add('is-ready');
+    document.querySelectorAll('.reveal').forEach(function (el) {
+      el.classList.add('in-view');
     });
   }
 
+  function dismissEntry() {
+    if (typeof window.ssDismissEntry === 'function') {
+      window.ssDismissEntry();
+      return;
+    }
+    try { sessionStorage.removeItem(ENTRY_KEY); } catch (e) {}
+    var shield = document.getElementById('ss-entry-shield');
+    if (shield) {
+      shield.style.display = 'none';
+      shield.remove();
+    }
+    document.documentElement.style.backgroundColor = '';
+    unlockPage();
+  }
+
   function bindReveals() {
-    const items = document.querySelectorAll('.reveal');
+    if (document.documentElement.classList.contains('is-ready')) return;
+    const items = document.querySelectorAll('.reveal:not(.in-view)');
     if (!items.length) return;
     const observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -63,8 +44,13 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.05, rootMargin: '0px 0px -5% 0px' });
     items.forEach(function (item) { observer.observe(item); });
+    setTimeout(function () {
+      items.forEach(function (item) {
+        if (!item.classList.contains('in-view')) item.classList.add('in-view');
+      });
+    }, 1200);
   }
 
   function bindFilters() {
@@ -97,7 +83,6 @@
     word.textContent = wordText;
     overlay.appendChild(word);
     document.body.appendChild(overlay);
-    return { overlay: overlay, word: word };
   }
 
   function bindTransitions() {
@@ -111,8 +96,10 @@
         if (url.pathname === window.location.pathname) return;
         event.preventDefault();
 
-        sessionStorage.setItem(ENTRY_KEY, '1');
-        sessionStorage.setItem(SKIP_MAUN_KEY, '1');
+        try {
+          sessionStorage.setItem(ENTRY_KEY, '1');
+          sessionStorage.setItem(SKIP_MAUN_KEY, '1');
+        } catch (e) {}
 
         const index = Number(localStorage.getItem(KEY) || '0');
         createTransitionOverlay(WORDS[index % WORDS.length]);
@@ -154,27 +141,12 @@
   }
 
   function init() {
-    makeEntryCover();
+    dismissEntry();
     bindReveals();
     bindFilters();
     bindTransitions();
     initIndexPreloader();
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-
-  window.addEventListener('load', function () {
-    var shield = document.getElementById('ss-entry-shield');
-    if (shield && !shield.classList.contains('fade-out')) {
-      releaseEntryCover(shield);
-    }
-  });
-
-  window.addEventListener('pageshow', function (event) {
-    if (event.persisted) makeEntryCover();
-  });
+  init();
 })();

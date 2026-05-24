@@ -720,7 +720,8 @@ button { font: inherit; }
   transform: translateY(28px);
   transition: opacity .8s var(--ease), transform .8s var(--ease);
 }
-.reveal.in-view {
+.reveal.in-view,
+html.is-ready .reveal {
   opacity: 1;
   transform: translateY(0);
 }
@@ -784,6 +785,9 @@ button { font: inherit; }
   opacity: 0;
   transition: opacity .38s var(--ease);
   pointer-events: none;
+}
+#ss-entry-shield.is-gone {
+  display: none !important;
 }
 
 .muted { color: var(--muted); }
