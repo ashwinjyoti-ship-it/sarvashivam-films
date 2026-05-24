@@ -1,7 +1,7 @@
 (function () {
   const WORDS = ['सृजन', 'दृष्टि', 'मौन', 'शिवम्'];
   const KEY = 'ss_transition_index';
-  const ENTRY_KEY = 'ss_entry_cover';
+  const JUST_NAV_KEY = 'ss_just_navigated';
   const SKIP_MAUN_KEY = 'ss_skip_maun';
   const COVER_COLOR = '#020202';
   const NAV_DELAY_MS = 2400;
@@ -16,25 +16,14 @@
     document.querySelectorAll('.reveal').forEach(function (el) {
       el.classList.add('in-view');
     });
-  }
-
-  function dismissEntry() {
-    if (typeof window.ssDismissEntry === 'function') {
-      window.ssDismissEntry();
-      return;
+    var hero = document.querySelector('[data-home-hero]');
+    if (hero) {
+      hero.style.opacity = '1';
+      hero.style.transform = 'none';
     }
-    try { sessionStorage.removeItem(ENTRY_KEY); } catch (e) {}
-    var shield = document.getElementById('ss-entry-shield');
-    if (shield) {
-      shield.style.display = 'none';
-      shield.remove();
-    }
-    document.documentElement.style.backgroundColor = '';
-    unlockPage();
   }
 
   function bindReveals() {
-    if (document.documentElement.classList.contains('is-ready')) return;
     const items = document.querySelectorAll('.reveal:not(.in-view)');
     if (!items.length) return;
     const observer = new IntersectionObserver(function (entries) {
@@ -44,13 +33,13 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.05, rootMargin: '0px 0px -5% 0px' });
+    }, { threshold: 0.05, rootMargin: '0px 0px -8% 0px' });
     items.forEach(function (item) { observer.observe(item); });
     setTimeout(function () {
       items.forEach(function (item) {
-        if (!item.classList.contains('in-view')) item.classList.add('in-view');
+        item.classList.add('in-view');
       });
-    }, 1200);
+    }, 800);
   }
 
   function bindFilters() {
@@ -97,7 +86,7 @@
         event.preventDefault();
 
         try {
-          sessionStorage.setItem(ENTRY_KEY, '1');
+          sessionStorage.setItem(JUST_NAV_KEY, '1');
           sessionStorage.setItem(SKIP_MAUN_KEY, '1');
         } catch (e) {}
 
@@ -141,12 +130,22 @@
   }
 
   function init() {
-    dismissEntry();
+    try {
+      if (sessionStorage.getItem(JUST_NAV_KEY) === '1') {
+        sessionStorage.removeItem(JUST_NAV_KEY);
+        unlockPage();
+      }
+    } catch (e) {}
+
     bindReveals();
     bindFilters();
     bindTransitions();
     initIndexPreloader();
   }
 
-  init();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
