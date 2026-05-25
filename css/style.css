@@ -568,7 +568,7 @@ button { font: inherit; }
   min-height: 340px;
   border-radius: 24px;
   border: 1px solid var(--line);
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  transition: opacity 0.55s ease, transform 0.55s ease;
   background:
     linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.6)),
     radial-gradient(circle at 50% 20%, rgba(255,231,183,0.18), transparent 18%),
@@ -588,8 +588,9 @@ button { font: inherit; }
 .work-card[data-tone="earth"] { background: linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.6)), radial-gradient(circle at 48% 22%, rgba(204,173,113,0.18), transparent 17%), linear-gradient(160deg, #302518, #0a0a0a 64%, #111); }
 .work-card.work-filtered {
   opacity: 0;
-  transform: scale(0.95);
+  transform: scale(0.92);
   pointer-events: none;
+  user-select: none;
 }
 .work-meta {
   position: absolute;

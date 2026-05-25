@@ -43,23 +43,9 @@
   }
 
   function applyWorkFilter(filter) {
-    var cards = document.querySelectorAll('.work-card');
-    cards.forEach(function (card) {
+    document.querySelectorAll('.work-card').forEach(function (card) {
       var matches = filter === 'all' || card.dataset.category === filter;
-      if (matches) {
-        card.style.display = '';
-        /* double rAF so display:'' is painted before transition fires */
-        requestAnimationFrame(function () {
-          requestAnimationFrame(function () {
-            card.classList.remove('work-filtered');
-          });
-        });
-      } else {
-        card.classList.add('work-filtered');
-        setTimeout(function () {
-          if (card.classList.contains('work-filtered')) card.style.display = 'none';
-        }, 380);
-      }
+      card.classList.toggle('work-filtered', !matches);
     });
   }
 
