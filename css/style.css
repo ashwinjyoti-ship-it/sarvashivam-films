@@ -472,6 +472,7 @@ button { font: inherit; }
   left: var(--hero-story-left);
   bottom: clamp(42px, 7vh, 76px);
   margin: 0;
+  font-family: 'Cormorant Garamond', serif;
   color: rgba(255,255,255,0.76);
   font-size: 1.02rem;
   line-height: 1.85;
