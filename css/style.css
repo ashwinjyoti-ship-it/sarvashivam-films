@@ -432,26 +432,51 @@ button { font: inherit; }
   display: none;
 }
 .home-page .hero-content {
+  --hero-pad: clamp(28px, 6vw, 72px);
+  --hero-copy-offset: clamp(72px, 12vw, 190px);
+  --hero-story-left: clamp(24px, 3.8vw, 48px);
   width: 100%;
   max-width: none;
   min-height: 100vh;
   margin: 0;
-  padding: 0 clamp(28px, 6vw, 72px);
+  padding: 0 var(--hero-pad);
   display: flex;
   align-items: center;
 }
 .home-page .hero-copy {
-  max-width: 620px;
-  margin-left: clamp(72px, 12vw, 190px);
+  width: fit-content;
+  max-width: 640px;
+  margin-left: var(--hero-copy-offset);
   margin-top: -2vh;
 }
 .home-page .hero-title {
-  font-size: clamp(3.9rem, 7.1vw, 6.3rem);
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  margin-bottom: 18px;
+  margin: 0;
 }
-.home-page .hero-copy p {
+.home-page .hero-logo {
+  width: clamp(420px, 44vw, 640px);
+  height: auto;
+  filter: drop-shadow(0 10px 32px rgba(0,0,0,0.34));
+}
+.home-page .hero-film {
+  margin: 16px 0 0;
+  max-width: none;
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.15rem, 1.8vw, 1.7rem);
+  line-height: 1;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.84);
+}
+.home-page .hero-story {
+  position: absolute;
+  left: var(--hero-story-left);
+  bottom: clamp(42px, 7vh, 76px);
+  margin: 0;
+  color: rgba(255,255,255,0.76);
+  font-size: 1.02rem;
+  line-height: 1.85;
+}
+.home-page .hero-copy p:not(.hero-film) {
   max-width: 30ch;
   font-size: 1.02rem;
   line-height: 1.85;
@@ -983,6 +1008,9 @@ html.is-ready .reveal {
     background: transparent;
   }
   .home-page .hero-content {
+    --hero-pad: 20px;
+    --hero-copy-offset: 0px;
+    --hero-story-left: 20px;
     padding: 0 20px;
   }
   .home-page .hero-copy {
@@ -991,10 +1019,20 @@ html.is-ready .reveal {
     max-width: 100%;
   }
   .home-page .hero-title {
-    font-size: clamp(2.6rem, 12vw, 3.8rem);
-    letter-spacing: 0.08em;
+    margin: 0;
   }
-  .home-page .hero-copy p {
+  .home-page .hero-logo {
+    width: clamp(250px, 82vw, 420px);
+  }
+  .home-page .hero-film {
+    margin-top: 12px;
+    font-size: clamp(1rem, 5vw, 1.35rem);
+  }
+  .home-page .hero-story {
+    bottom: calc(34px + env(safe-area-inset-bottom, 0));
+    font-size: 0.96rem;
+  }
+  .home-page .hero-copy p:not(.hero-film) {
     max-width: 28ch;
     font-size: 0.96rem;
     line-height: 1.75;
