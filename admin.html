@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#020202">
+  <title>Admin — SARVSHIVAM</title>
+  <style>html{background-color:#020202;color-scheme:dark}</style>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <meta name="robots" content="noindex,nofollow">
+</head>
+<body>
+  <script>try{var e=document.getElementById('ss-entry-shield');if(e)e.remove();sessionStorage.removeItem('ss_entry_cover');}catch(x){}</script>
+  <div class="page-shell">
+    <header class="site-header">
+      <nav class="nav">
+        <a class="brand" href="index.html" aria-label="SARVSHIVAM home">
+          <img class="brand-logo" src="images/logo.png" alt="SARVSHIVAM logo">
+          <span class="brand-sub">Films • Ideas • Meaning</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="about.html">Intent</a>
+          <a href="work.html">Work</a>
+          <a href="narrative.html">Narrative</a>
+          <a href="founder.html">Founder</a>
+          <a href="contact.html">Contact</a>
+          <a class="active" href="admin.html">Admin</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container section">
+
+      <!-- Password Gate -->
+      <div id="admin-gate" class="admin-gate" style="min-height:60vh;padding-top:0">
+        <div class="admin-gate-card">
+          <div class="admin-gate-title">Admin</div>
+          <div class="admin-gate-sub">Work Library</div>
+          <div class="form-group">
+            <label for="gate-password">Password</label>
+            <input type="password" id="gate-password" placeholder="Enter password" autocomplete="current-password">
+          </div>
+          <div id="gate-error" style="font-size:.82rem;color:#cf8080;margin-bottom:16px;min-height:20px"></div>
+          <button class="btn btn-gold" id="gate-submit" style="width:100%;justify-content:center">Enter</button>
+        </div>
+      </div>
+
+      <!-- Admin Panel -->
+      <div id="admin-panel" class="admin-panel">
+        <div class="admin-header">
+          <div>
+            <h1>Work Library</h1>
+            <p>Admin Panel</p>
+          </div>
+          <button class="btn btn-ghost" id="admin-logout">Sign out</button>
+        </div>
+
+        <div class="film-slots">
+
+          <!-- Slot 1 -->
+          <div class="film-slot" id="slot-1" data-slot="1">
+            <div class="slot-header">
+              <div class="slot-number">01</div>
+              <div class="slot-title-preview">—</div>
+              <div class="slot-video-badge" style="display:none">—</div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Title</label>
+                <input type="text" name="title" placeholder="Film title">
+              </div>
+              <div class="form-group">
+                <label>Category</label>
+                <select name="category">
+                  <option value="short-film">Short Film</option>
+                  <option value="music-video">Music Video</option>
+                  <option value="brand-film">Brand Film</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea name="description" placeholder="Short description shown on the work card"></textarea>
+            </div>
+            <div class="video-section">
+              <div class="video-section-label">Video</div>
+              <div class="video-current" style="display:none">
+                <span class="video-current-icon">▶</span>
+                <span class="video-current-url"></span>
+              </div>
+              <div class="video-tabs">
+                <button class="video-tab-btn active" data-tab="youtube" type="button">YouTube URL</button>
+                <button class="video-tab-btn" data-tab="upload" type="button">Upload Clip</button>
+              </div>
+              <div class="video-tab-pane active" data-tab="youtube">
+                <div class="form-group" style="margin-bottom:0">
+                  <input type="url" class="yt-url-input" placeholder="https://www.youtube.com/watch?v=…">
+                </div>
+              </div>
+              <div class="video-tab-pane" data-tab="upload">
+                <div class="file-drop">
+                  <div class="file-drop-icon">↑</div>
+                  <div class="file-drop-text">Click or drag a clip here</div>
+                  <div class="file-drop-sub">.mp4 or .mov · up to 20 seconds</div>
+                  <input type="file" accept=".mp4,.mov,video/mp4,video/quicktime">
+                </div>
+                <div class="file-chosen" style="display:none">
+                  <span class="file-chosen-icon">✓</span>
+                  <span class="file-chosen-name"></span>
+                </div>
+              </div>
+            </div>
+            <div class="slot-actions">
+              <button class="btn btn-gold slot-save-btn" type="button">Save</button>
+              <button class="btn btn-danger btn-remove-video" type="button" style="display:none">Remove video</button>
+              <span class="slot-status"></span>
+            </div>
+          </div>
+
+          <!-- Slot 2 -->
+          <div class="film-slot" id="slot-2" data-slot="2">
+            <div class="slot-header">
+              <div class="slot-number">02</div>
+              <div class="slot-title-preview">—</div>
+              <div class="slot-video-badge" style="display:none">—</div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Title</label>
+                <input type="text" name="title" placeholder="Film title">
+              </div>
+              <div class="form-group">
+                <label>Category</label>
+                <select name="category">
+                  <option value="short-film">Short Film</option>
+                  <option value="music-video">Music Video</option>
+                  <option value="brand-film">Brand Film</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea name="description" placeholder="Short description shown on the work card"></textarea>
+            </div>
+            <div class="video-section">
+              <div class="video-section-label">Video</div>
+              <div class="video-current" style="display:none">
+                <span class="video-current-icon">▶</span>
+                <span class="video-current-url"></span>
+              </div>
+              <div class="video-tabs">
+                <button class="video-tab-btn active" data-tab="youtube" type="button">YouTube URL</button>
+                <button class="video-tab-btn" data-tab="upload" type="button">Upload Clip</button>
+              </div>
+              <div class="video-tab-pane active" data-tab="youtube">
+                <div class="form-group" style="margin-bottom:0">
+                  <input type="url" class="yt-url-input" placeholder="https://www.youtube.com/watch?v=…">
+                </div>
+              </div>
+              <div class="video-tab-pane" data-tab="upload">
+                <div class="file-drop">
+                  <div class="file-drop-icon">↑</div>
+                  <div class="file-drop-text">Click or drag a clip here</div>
+                  <div class="file-drop-sub">.mp4 or .mov · up to 20 seconds</div>
+                  <input type="file" accept=".mp4,.mov,video/mp4,video/quicktime">
+                </div>
+                <div class="file-chosen" style="display:none">
+                  <span class="file-chosen-icon">✓</span>
+                  <span class="file-chosen-name"></span>
+                </div>
+              </div>
+            </div>
+            <div class="slot-actions">
+              <button class="btn btn-gold slot-save-btn" type="button">Save</button>
+              <button class="btn btn-danger btn-remove-video" type="button" style="display:none">Remove video</button>
+              <span class="slot-status"></span>
+            </div>
+          </div>
+
+          <!-- Slot 3 -->
+          <div class="film-slot" id="slot-3" data-slot="3">
+            <div class="slot-header">
+              <div class="slot-number">03</div>
+              <div class="slot-title-preview">—</div>
+              <div class="slot-video-badge" style="display:none">—</div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Title</label>
+                <input type="text" name="title" placeholder="Film title">
+              </div>
+              <div class="form-group">
+                <label>Category</label>
+                <select name="category">
+                  <option value="short-film">Short Film</option>
+                  <option value="music-video">Music Video</option>
+                  <option value="brand-film">Brand Film</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea name="description" placeholder="Short description shown on the work card"></textarea>
+            </div>
+            <div class="video-section">
+              <div class="video-section-label">Video</div>
+              <div class="video-current" style="display:none">
+                <span class="video-current-icon">▶</span>
+                <span class="video-current-url"></span>
+              </div>
+              <div class="video-tabs">
+                <button class="video-tab-btn active" data-tab="youtube" type="button">YouTube URL</button>
+                <button class="video-tab-btn" data-tab="upload" type="button">Upload Clip</button>
+              </div>
+              <div class="video-tab-pane active" data-tab="youtube">
+                <div class="form-group" style="margin-bottom:0">
+                  <input type="url" class="yt-url-input" placeholder="https://www.youtube.com/watch?v=…">
+                </div>
+              </div>
+              <div class="video-tab-pane" data-tab="upload">
+                <div class="file-drop">
+                  <div class="file-drop-icon">↑</div>
+                  <div class="file-drop-text">Click or drag a clip here</div>
+                  <div class="file-drop-sub">.mp4 or .mov · up to 20 seconds</div>
+                  <input type="file" accept=".mp4,.mov,video/mp4,video/quicktime">
+                </div>
+                <div class="file-chosen" style="display:none">
+                  <span class="file-chosen-icon">✓</span>
+                  <span class="file-chosen-name"></span>
+                </div>
+              </div>
+            </div>
+            <div class="slot-actions">
+              <button class="btn btn-gold slot-save-btn" type="button">Save</button>
+              <button class="btn btn-danger btn-remove-video" type="button" style="display:none">Remove video</button>
+              <span class="slot-status"></span>
+            </div>
+          </div>
+
+          <!-- Slot 4 -->
+          <div class="film-slot" id="slot-4" data-slot="4">
+            <div class="slot-header">
+              <div class="slot-number">04</div>
+              <div class="slot-title-preview">—</div>
+              <div class="slot-video-badge" style="display:none">—</div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Title</label>
+                <input type="text" name="title" placeholder="Film title">
+              </div>
+              <div class="form-group">
+                <label>Category</label>
+                <select name="category">
+                  <option value="short-film">Short Film</option>
+                  <option value="music-video">Music Video</option>
+                  <option value="brand-film">Brand Film</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea name="description" placeholder="Short description shown on the work card"></textarea>
+            </div>
+            <div class="video-section">
+              <div class="video-section-label">Video</div>
+              <div class="video-current" style="display:none">
+                <span class="video-current-icon">▶</span>
+                <span class="video-current-url"></span>
+              </div>
+              <div class="video-tabs">
+                <button class="video-tab-btn active" data-tab="youtube" type="button">YouTube URL</button>
+                <button class="video-tab-btn" data-tab="upload" type="button">Upload Clip</button>
+              </div>
+              <div class="video-tab-pane active" data-tab="youtube">
+                <div class="form-group" style="margin-bottom:0">
+                  <input type="url" class="yt-url-input" placeholder="https://www.youtube.com/watch?v=…">
+                </div>
+              </div>
+              <div class="video-tab-pane" data-tab="upload">
+                <div class="file-drop">
+                  <div class="file-drop-icon">↑</div>
+                  <div class="file-drop-text">Click or drag a clip here</div>
+                  <div class="file-drop-sub">.mp4 or .mov · up to 20 seconds</div>
+                  <input type="file" accept=".mp4,.mov,video/mp4,video/quicktime">
+                </div>
+                <div class="file-chosen" style="display:none">
+                  <span class="file-chosen-icon">✓</span>
+                  <span class="file-chosen-name"></span>
+                </div>
+              </div>
+            </div>
+            <div class="slot-actions">
+              <button class="btn btn-gold slot-save-btn" type="button">Save</button>
+              <button class="btn btn-danger btn-remove-video" type="button" style="display:none">Remove video</button>
+              <span class="slot-status"></span>
+            </div>
+          </div>
+
+          <!-- Slot 5 -->
+          <div class="film-slot" id="slot-5" data-slot="5">
+            <div class="slot-header">
+              <div class="slot-number">05</div>
+              <div class="slot-title-preview">—</div>
+              <div class="slot-video-badge" style="display:none">—</div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Title</label>
+                <input type="text" name="title" placeholder="Film title">
+              </div>
+              <div class="form-group">
+                <label>Category</label>
+                <select name="category">
+                  <option value="short-film">Short Film</option>
+                  <option value="music-video">Music Video</option>
+                  <option value="brand-film">Brand Film</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea name="description" placeholder="Short description shown on the work card"></textarea>
+            </div>
+            <div class="video-section">
+              <div class="video-section-label">Video</div>
+              <div class="video-current" style="display:none">
+                <span class="video-current-icon">▶</span>
+                <span class="video-current-url"></span>
+              </div>
+              <div class="video-tabs">
+                <button class="video-tab-btn active" data-tab="youtube" type="button">YouTube URL</button>
+                <button class="video-tab-btn" data-tab="upload" type="button">Upload Clip</button>
+              </div>
+              <div class="video-tab-pane active" data-tab="youtube">
+                <div class="form-group" style="margin-bottom:0">
+                  <input type="url" class="yt-url-input" placeholder="https://www.youtube.com/watch?v=…">
+                </div>
+              </div>
+              <div class="video-tab-pane" data-tab="upload">
+                <div class="file-drop">
+                  <div class="file-drop-icon">↑</div>
+                  <div class="file-drop-text">Click or drag a clip here</div>
+                  <div class="file-drop-sub">.mp4 or .mov · up to 20 seconds</div>
+                  <input type="file" accept=".mp4,.mov,video/mp4,video/quicktime">
+                </div>
+                <div class="file-chosen" style="display:none">
+                  <span class="file-chosen-icon">✓</span>
+                  <span class="file-chosen-name"></span>
+                </div>
+              </div>
+            </div>
+            <div class="slot-actions">
+              <button class="btn btn-gold slot-save-btn" type="button">Save</button>
+              <button class="btn btn-danger btn-remove-video" type="button" style="display:none">Remove video</button>
+              <span class="slot-status"></span>
+            </div>
+          </div>
+
+        </div><!-- /film-slots -->
+
+        <!-- Change Password -->
+        <div style="margin-bottom:80px">
+          <div class="admin-section-title">Change Password</div>
+          <div class="admin-section-sub">Update the admin panel password.</div>
+          <div class="password-change-card">
+            <div class="form-group">
+              <label for="pw-new">New Password</label>
+              <input type="password" id="pw-new" placeholder="New password" autocomplete="new-password">
+            </div>
+            <div class="form-group">
+              <label for="pw-confirm">Confirm Password</label>
+              <input type="password" id="pw-confirm" placeholder="Confirm new password" autocomplete="new-password">
+            </div>
+            <div class="slot-actions" style="border:none;padding-top:0;margin-top:8px">
+              <button class="btn btn-gold" id="pw-change-btn" type="button">Update Password</button>
+              <span id="pw-change-status" class="slot-status"></span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /admin-panel -->
+
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div>Every frame is intentional.</div>
+        <div class="footer-devanagari">सर्व शिवमयम्</div>
+      </div>
+    </footer>
+  </div>
+  <script src="js/transition.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

@@ -8,6 +8,112 @@
   <meta name="description" content="Selected narrative-driven films from SARVSHIVAM.">
   <style>html{background-color:#020202;color-scheme:dark}</style>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Video card media layer */
+    .work-card-media {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      border-radius: inherit;
+    }
+    .work-card-media video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .work-card.has-media::before,
+    .work-card.has-youtube::before {
+      z-index: 1;
+    }
+    .work-card.has-media .work-meta,
+    .work-card.has-youtube .work-meta {
+      z-index: 2;
+    }
+    /* Play button for YouTube cards */
+    .work-card-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) translateY(-18px);
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.52);
+      border: 1.5px solid rgba(255,255,255,0.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      transition: background .25s ease, transform .25s ease;
+      pointer-events: none;
+    }
+    .work-card.has-youtube:hover .work-card-play {
+      background: rgba(0,0,0,0.72);
+      transform: translate(-50%, -50%) translateY(-18px) scale(1.08);
+    }
+    .work-card-play span {
+      font-size: 1.1rem;
+      color: #fff;
+      margin-left: 3px;
+    }
+    /* YouTube modal */
+    .video-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0,0,0,0.88);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .video-modal[hidden] { display: none; }
+    .video-modal-inner {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      aspect-ratio: 16/9;
+    }
+    .video-modal-inner iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 12px;
+    }
+    .video-modal-close {
+      position: absolute;
+      top: -44px;
+      right: 0;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #f3eee2;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background .2s ease;
+    }
+    .video-modal-close:hover { background: rgba(255,255,255,0.1); }
+    /* Skeleton loading state */
+    .work-card-skeleton {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.04) 50%, transparent 100%);
+      background-size: 200% 100%;
+      animation: shimmer 1.6s infinite;
+      border-radius: inherit;
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+  </style>
 </head>
 <body>
   <script>try{var e=document.getElementById('ss-entry-shield');if(e)e.remove();sessionStorage.removeItem('ss_entry_cover');}catch(x){}</script>
@@ -25,6 +131,7 @@
           <a href="narrative.html">Narrative</a>
           <a href="founder.html">Founder</a>
           <a href="contact.html">Contact</a>
+          <a href="admin.html">Admin</a>
         </div>
       </nav>
     </header>
@@ -45,41 +152,12 @@
       </div>
 
       <section class="work-grid">
-        <article class="work-card reveal" data-category="short-film" data-tone="warm">
-          <div class="work-meta">
-            <div class="work-tag">Short Film</div>
-            <h2 class="work-title">KAAFIR</h2>
-            <p class="work-copy">A moral fracture rendered in stillness, dusk, and withheld revelation.</p>
-          </div>
-        </article>
-        <article class="work-card reveal" data-category="music-video" data-tone="silver">
-          <div class="work-meta">
-            <div class="work-tag">Music Video</div>
-            <h2 class="work-title">VANVAAS</h2>
-            <p class="work-copy">Departure, exile, and longing translated through sonic memory and image.</p>
-          </div>
-        </article>
-        <article class="work-card reveal" data-category="brand-film" data-tone="earth">
-          <div class="work-meta">
-            <div class="work-tag">Brand Film</div>
-            <h2 class="work-title">MONOLOGUE</h2>
-            <p class="work-copy">A voice-led identity piece where intimacy becomes the visual architecture.</p>
-          </div>
-        </article>
-        <article class="work-card reveal" data-category="short-film">
-          <div class="work-meta">
-            <div class="work-tag">Short Film</div>
-            <h2 class="work-title">AAINA</h2>
-            <p class="work-copy">A film of reflection, self-recognition, and the unease of being seen.</p>
-          </div>
-        </article>
-        <article class="work-card reveal" data-category="brand-film" data-tone="warm">
-          <div class="work-meta">
-            <div class="work-tag">Brand Film</div>
-            <h2 class="work-title">SIYA</h2>
-            <p class="work-copy">A feminine interiority piece shaped through restraint, rhythm, and light.</p>
-          </div>
-        </article>
+        <!-- Cards are rendered dynamically by js/work.js -->
+        <article class="work-card reveal" style="min-height:340px"><div class="work-card-skeleton"></div></article>
+        <article class="work-card reveal" style="min-height:340px"><div class="work-card-skeleton"></div></article>
+        <article class="work-card reveal" style="min-height:340px"><div class="work-card-skeleton"></div></article>
+        <article class="work-card reveal" style="min-height:340px"><div class="work-card-skeleton"></div></article>
+        <article class="work-card reveal" style="min-height:340px"><div class="work-card-skeleton"></div></article>
       </section>
     </main>
 
@@ -90,6 +168,16 @@
       </div>
     </footer>
   </div>
+
+  <!-- YouTube lightbox modal -->
+  <div id="video-modal" class="video-modal" hidden>
+    <div class="video-modal-inner">
+      <button class="video-modal-close" id="video-modal-close" aria-label="Close video">&#215;</button>
+      <iframe id="video-modal-frame" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+
   <script src="js/transition.js"></script>
+  <script src="js/work.js"></script>
 </body>
 </html>
