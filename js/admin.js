@@ -51,6 +51,20 @@
   pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(pwInput.value.trim()); });
   logoutBtn.addEventListener('click', showGate);
 
+  const changePwBtn = document.getElementById('admin-change-pw');
+  const pwModal = document.getElementById('pw-modal');
+  const pwModalClose = document.getElementById('pw-modal-close');
+
+  changePwBtn.addEventListener('click', () => {
+    document.getElementById('pw-new').value = '';
+    document.getElementById('pw-confirm').value = '';
+    document.getElementById('pw-change-status').className = 'slot-status';
+    pwModal.removeAttribute('hidden');
+  });
+  pwModalClose.addEventListener('click', () => pwModal.setAttribute('hidden', ''));
+  pwModal.addEventListener('click', e => { if (e.target === pwModal) pwModal.setAttribute('hidden', ''); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') pwModal.setAttribute('hidden', ''); });
+
   /* ---------- Load & render film slots ---------- */
 
   async function loadFilms() {
@@ -273,6 +287,7 @@
       pwConfirmInput.value = '';
       pwChangeStatus.textContent = 'Password updated';
       pwChangeStatus.className = 'slot-status visible success';
+      setTimeout(() => document.getElementById('pw-modal').setAttribute('hidden', ''), 1400);
     } catch (e) {
       pwChangeStatus.textContent = e.message;
       pwChangeStatus.className = 'slot-status visible error';

@@ -54,7 +54,10 @@
             <h1>Work Library</h1>
             <p>Admin Panel</p>
           </div>
-          <button class="btn btn-ghost" id="admin-logout">Sign out</button>
+          <div style="display:flex;gap:10px;align-items:center">
+            <button class="btn btn-ghost" id="admin-change-pw">Change Password</button>
+            <button class="btn btn-ghost" id="admin-logout">Sign out</button>
+          </div>
         </div>
 
         <div class="film-slots">
@@ -361,27 +364,29 @@
 
         </div><!-- /film-slots -->
 
-        <!-- Change Password -->
-        <div style="margin-bottom:80px">
-          <div class="admin-section-title">Change Password</div>
-          <div class="admin-section-sub">Update the admin panel password.</div>
-          <div class="password-change-card">
-            <div class="form-group">
-              <label for="pw-new">New Password</label>
-              <input type="password" id="pw-new" placeholder="New password" autocomplete="new-password">
-            </div>
-            <div class="form-group">
-              <label for="pw-confirm">Confirm Password</label>
-              <input type="password" id="pw-confirm" placeholder="Confirm new password" autocomplete="new-password">
-            </div>
-            <div class="slot-actions" style="border:none;padding-top:0;margin-top:8px">
-              <button class="btn btn-gold" id="pw-change-btn" type="button">Update Password</button>
-              <span id="pw-change-status" class="slot-status"></span>
-            </div>
+      </div><!-- /admin-panel -->
+
+      <!-- Change Password Modal -->
+      <div id="pw-modal" class="pw-modal" hidden>
+        <div class="pw-modal-card">
+          <div class="pw-modal-header">
+            <div class="pw-modal-title">Change Password</div>
+            <button class="pw-modal-close" id="pw-modal-close" aria-label="Close">&#215;</button>
+          </div>
+          <div class="form-group">
+            <label for="pw-new">New Password</label>
+            <input type="password" id="pw-new" placeholder="New password" autocomplete="new-password">
+          </div>
+          <div class="form-group">
+            <label for="pw-confirm">Confirm Password</label>
+            <input type="password" id="pw-confirm" placeholder="Confirm new password" autocomplete="new-password">
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;margin-top:8px">
+            <button class="btn btn-gold" id="pw-change-btn" type="button">Update Password</button>
+            <span id="pw-change-status" class="slot-status"></span>
           </div>
         </div>
-
-      </div><!-- /admin-panel -->
+      </div>
 
     </main>
 
