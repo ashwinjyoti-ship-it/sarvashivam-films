@@ -1,0 +1,12 @@
+name = "sarvshivam-films"
+pages_build_output_dir = "."
+compatibility_date = "2024-09-23"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "sarvshivam-films-db"
+database_id = "f4cd7a50-19e3-4aed-b8b3-17e08894641c"
+
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "sarvshivam-films-media"
