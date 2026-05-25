@@ -42,19 +42,38 @@
     }, 800);
   }
 
+  function applyWorkFilter(filter) {
+    var cards = document.querySelectorAll('.work-card');
+    cards.forEach(function (card) {
+      var matches = filter === 'all' || card.dataset.category === filter;
+      if (matches) {
+        card.style.display = '';
+        /* double rAF so display:'' is painted before transition fires */
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            card.classList.remove('work-filtered');
+          });
+        });
+      } else {
+        card.classList.add('work-filtered');
+        setTimeout(function () {
+          if (card.classList.contains('work-filtered')) card.style.display = 'none';
+        }, 380);
+      }
+    });
+  }
+
+  /* expose so work.js can call it after dynamic render */
+  window._applyWorkFilter = applyWorkFilter;
+
   function bindFilters() {
     const buttons = document.querySelectorAll('[data-filter]');
-    const cards = document.querySelectorAll('.work-card');
-    if (!buttons.length || !cards.length) return;
+    if (!buttons.length) return;
     buttons.forEach(function (btn) {
       btn.addEventListener('click', function () {
         buttons.forEach(function (b) { b.classList.remove('active'); });
         btn.classList.add('active');
-        const filter = btn.dataset.filter;
-        cards.forEach(function (card) {
-          const show = filter === 'all' || card.dataset.category === filter;
-          card.style.display = show ? '' : 'none';
-        });
+        applyWorkFilter(btn.dataset.filter);
       });
     });
   }

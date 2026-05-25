@@ -103,12 +103,11 @@
       /* reveal cards immediately (page is already loaded) */
       grid.querySelectorAll('.reveal').forEach(el => el.classList.add('in-view'));
 
-      /* re-run filter so active button state applies to new cards */
+      /* re-apply whatever filter is currently active */
       const activeFilter = document.querySelector('.filter-btn.active');
-      if (activeFilter && activeFilter.dataset.filter !== 'all') {
-        grid.querySelectorAll('.work-card').forEach(card => {
-          card.style.display = card.dataset.category === activeFilter.dataset.filter ? '' : 'none';
-        });
+      const currentFilter = activeFilter ? activeFilter.dataset.filter : 'all';
+      if (typeof window._applyWorkFilter === 'function') {
+        window._applyWorkFilter(currentFilter);
       }
     } catch (e) {
       console.error('Failed to load films', e);
