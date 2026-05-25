@@ -90,9 +90,21 @@
           sessionStorage.setItem(SKIP_MAUN_KEY, '1');
         } catch (e) {}
 
-        const index = Number(localStorage.getItem(KEY) || '0');
-        createTransitionOverlay(WORDS[index % WORDS.length]);
-        localStorage.setItem(KEY, String((index + 1) % WORDS.length));
+        if (link.hasAttribute('data-no-transition')) {
+          paintRootDark();
+          window.location.assign(url.href);
+          return;
+        }
+
+        var word;
+        if (link.hasAttribute('data-transition-word')) {
+          word = link.getAttribute('data-transition-word');
+        } else {
+          var index = Number(localStorage.getItem(KEY) || '0');
+          word = WORDS[index % WORDS.length];
+          localStorage.setItem(KEY, String((index + 1) % WORDS.length));
+        }
+        createTransitionOverlay(word);
 
         setTimeout(function () {
           paintRootDark();
