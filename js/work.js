@@ -41,13 +41,14 @@
       if (videoId) {
         article.dataset.youtubeId = videoId;
         article.classList.add('has-youtube');
-        article.style.backgroundImage = 'url(https://img.youtube.com/vi/' + videoId + '/hqdefault.jpg)';
-        article.style.backgroundSize = 'cover';
-        article.style.backgroundPosition = 'center';
+        const thumb = document.createElement('div');
+        thumb.className = 'work-card-thumb';
+        thumb.style.backgroundImage = 'url(https://img.youtube.com/vi/' + videoId + '/hqdefault.jpg)';
         const playBtn = document.createElement('div');
         playBtn.className = 'work-card-play';
         playBtn.innerHTML = '<span>&#9654;</span>';
-        article.appendChild(playBtn);
+        thumb.appendChild(playBtn);
+        article.appendChild(thumb);
       }
     }
 

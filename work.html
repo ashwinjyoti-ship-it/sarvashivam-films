@@ -11,11 +11,10 @@
   <style>
     /* Video card media layer */
     .work-card-media {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
+      flex: 0 0 190px;
+      border-radius: 20px 20px 0 0;
       overflow: hidden;
-      border-radius: inherit;
+      position: relative;
     }
     .work-card-media video {
       width: 100%;
@@ -23,38 +22,53 @@
       object-fit: cover;
       display: block;
     }
-    .work-card.has-media::before,
-    .work-card.has-youtube::before {
-      z-index: 1;
+    /* Cards with video: stack thumb on top, meta below */
+    .work-card.has-media,
+    .work-card.has-youtube {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      cursor: pointer;
     }
+    .work-card.has-media::before,
+    .work-card.has-youtube::before { display: none; }
     .work-card.has-media .work-meta,
     .work-card.has-youtube .work-meta {
-      z-index: 2;
+      position: static;
+      padding: 16px 18px 18px;
     }
-    /* Play button for YouTube cards */
+    /* YouTube thumbnail area */
+    .work-card-thumb {
+      flex: 0 0 190px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 20px 20px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Play button */
     .work-card-play {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%) translateY(-18px);
-      width: 54px;
-      height: 54px;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
-      background: rgba(0,0,0,0.52);
-      border: 1.5px solid rgba(255,255,255,0.28);
+      background: rgba(0,0,0,0.55);
+      border: 1.5px solid rgba(255,255,255,0.3);
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 2;
       transition: background .25s ease, transform .25s ease;
       pointer-events: none;
     }
     .work-card.has-youtube:hover .work-card-play {
-      background: rgba(0,0,0,0.72);
-      transform: translate(-50%, -50%) translateY(-18px) scale(1.08);
+      background: rgba(0,0,0,0.75);
+      transform: translate(-50%, -50%) scale(1.08);
     }
     .work-card-play span {
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: #fff;
       margin-left: 3px;
     }
