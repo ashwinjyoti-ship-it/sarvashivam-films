@@ -121,17 +121,45 @@
     });
   });
 
+  /* ---------- Duration check ---------- */
+
+  function getVideoDuration(file) {
+    return new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file);
+      const vid = document.createElement('video');
+      vid.preload = 'metadata';
+      vid.onloadedmetadata = () => { URL.revokeObjectURL(url); resolve(vid.duration); };
+      vid.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Could not read video file')); };
+      vid.src = url;
+    });
+  }
+
   /* ---------- File drop areas ---------- */
 
   document.querySelectorAll('.file-drop').forEach(drop => {
     const input = drop.querySelector('input[type="file"]');
     const chosen = drop.nextElementSibling;
 
-    input.addEventListener('change', () => {
+    input.addEventListener('change', async () => {
       const file = input.files[0];
-      if (file) {
-        chosen.querySelector('.file-chosen-name').textContent = file.name + ' (' + (file.size / 1024 / 1024).toFixed(1) + ' MB)';
-        chosen.style.display = 'flex';
+      if (!file) return;
+
+      chosen.querySelector('.file-chosen-name').textContent = file.name + ' (' + (file.size / 1024 / 1024).toFixed(1) + ' MB)';
+      chosen.style.display = 'flex';
+      chosen.style.borderColor = '';
+      chosen.style.color = '';
+
+      try {
+        const duration = await getVideoDuration(file);
+        if (duration > 20) {
+          chosen.querySelector('.file-chosen-name').textContent =
+            'Too long: ' + Math.round(duration) + 's — maximum is 20 seconds';
+          chosen.style.borderColor = 'rgba(220,80,80,0.45)';
+          chosen.style.color = '#cf8080';
+          input.value = '';
+        }
+      } catch (e) {
+        /* If duration can't be read, let the server decide */
       }
     });
 
@@ -168,6 +196,19 @@
         if (activeTab === 'upload') {
           const fileInput = slot.querySelector('input[type="file"]');
           const file = fileInput.files[0];
+
+          if (file) {
+            try {
+              const duration = await getVideoDuration(file);
+              if (duration > 20) {
+                throw new Error('Clip is ' + Math.round(duration) + 's — maximum is 20 seconds');
+              }
+            } catch (e) {
+              if (e.message.includes('maximum')) throw e;
+              /* unreadable duration — let server handle it */
+            }
+          }
+
           const form = new FormData();
           form.append('title', slot.querySelector('[name="title"]').value.trim());
           form.append('description', slot.querySelector('[name="description"]').value.trim());
