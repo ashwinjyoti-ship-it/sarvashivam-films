@@ -443,6 +443,7 @@ button { font: inherit; }
   align-items: center;
 }
 .home-page .hero-copy {
+  width: fit-content;
   max-width: 640px;
   margin-left: var(--hero-copy-offset);
   margin-top: -2vh;
