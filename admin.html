@@ -398,6 +398,28 @@
             <div class="content-cards" id="content-cards">
               <!-- Populated dynamically by admin.js -->
             </div>
+
+            <!-- Transition Words panel -->
+            <div class="tw-panel" id="transition-words-panel">
+              <div class="tw-panel-header">
+                <div>
+                  <h3 class="tw-panel-title">Transition Words</h3>
+                  <p class="tw-panel-sub">Devanagari words shown during page navigation</p>
+                </div>
+              </div>
+              <div class="tw-word-list" id="tw-word-list">
+                <p style="color:#b9af96">Loading…</p>
+              </div>
+              <div class="tw-add-row">
+                <div class="tw-input-group">
+                  <input class="tw-roman-input" id="tw-roman" type="text" placeholder="type romanised (e.g. maun)" autocomplete="off" spellcheck="false">
+                  <div class="tw-preview" id="tw-preview">—</div>
+                </div>
+                <input class="tw-label-input" id="tw-label" type="text" placeholder="English meaning (e.g. silence)">
+                <button class="btn btn-gold tw-add-btn" id="tw-add-btn">Add Word</button>
+                <span class="slot-status" id="tw-status"></span>
+              </div>
+            </div>
           </div>
         </div><!-- /admin-tab-content -->
 

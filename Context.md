@@ -3,9 +3,10 @@
 Static marketing site for **SARVSHIVAM** (film-first creative studio). No build step, no framework.
 
 ## Stack
-- HTML5 pages + single `css/style.css` + `js/transition.js`
+- HTML5 pages + `css/style.css` + `css/edit-mode.css` + `js/transition.js` + `js/site-content.js` + `js/admin.js`
 - Fonts: Cormorant Garamond (display), Inter (UI) via Google Fonts
 - Deploy: GitHub `main` → Cloudflare Pages (`sarvshivam-films`) via `.github/workflows/deploy.yml`
+- Backend: Cloudflare Pages Functions (`functions/api/`) + D1 database (`sarvshivam-films-db`, id `f4cd7a50-19e3-4aed-b8b3-17e08894641c`) + R2 bucket (`sarvshivam-films-media`)
 - Repo: `ashwinjyoti-ship-it/sarvashivam-films`
 
 ## Files
@@ -16,9 +17,23 @@ work.html           Work library + filter JS
 narrative.html      Narrative & originals
 founder.html        Founder (body.founder-page)
 contact.html
-css/style.css       All styles
+admin.html          Admin panel (gate + Work Library + Content Manager tabs)
+css/style.css       All public styles
+css/edit-mode.css   Edit mode overlay styles (bar, corners, popup)
 js/transition.js    Nav transitions, reveals, home preloader, work filters
-images/logo.png
+js/site-content.js  Public content population + inline edit mode (?edit=1)
+js/admin.js         Admin panel logic (auth, film slots, content manager)
+migrations/
+  001_init.sql      films + admin_config tables + seed data
+  002_site_content.sql  site_content table + 84 seed rows (7 pages)
+functions/api/
+  films.js                GET /api/films
+  site-content.js         GET /api/site-content (public)
+  admin/login.js          POST /api/admin/login
+  admin/verify.js         GET /api/admin/verify
+  admin/password.js       POST /api/admin/password
+  admin/site-content.js   PUT /api/admin/site-content
+  admin/films/[slot].js   PUT /api/admin/films/:slot
 ```
 
 ## Pages / nav
@@ -30,6 +45,7 @@ images/logo.png
 | narrative | Narrative | |
 | founder | Founder | Single-column; footer Devanagari only |
 | contact | Contact | |
+| admin | — | Not in public nav; gate-protected |
 
 ## Design tokens (`:root`)
 - BG black `#000` on home/founder; other pages dark gradient on `body`
@@ -74,6 +90,33 @@ images/logo.png
 <script src="js/transition.js"></script>
 ```
 
+## Site Content System
+- All editable text is stored in D1 `site_content` table (`content_key`, `content_value`, `max_chars`, `page`, `section`, `element_type`)
+- Public pages bind text via `[data-site-key="<key>"]` attributes; `js/site-content.js` fetches `/api/site-content` and populates on load
+- 84 rows across pages: `index` (4), `about` (22), `work` (9), `narrative` (15), `founder` (11), `contact` (15), `shared` (8)
+- **Migration must be applied to D1** before content loads — migration 002 was applied directly to production (not via wrangler) on 2026-05-27
+
+## Edit Mode (`?edit=1`)
+- Any public page accepts `?edit=1` query param; `js/site-content.js` verifies admin token then activates inline editing
+- `activateEditMode()`: adds `is-edit-mode` to `<html>`, injects `.edit-mode-bar` (fixed top bar) + `.edit-mode-frame` (visual indicator)
+- `.edit-mode-frame` contains 4 `.em-corner` spans (tl/tr/bl/br) — L-shaped gold camera viewfinder brackets that slide in from corners and pulse
+- Click any `[data-site-key]` element → inline popup with textarea + char counter + save (PUT `/api/admin/site-content`)
+- `patchNavLinks()` appends `?edit=1` to all relative links so edit mode persists across page navigations
+- `Done Editing` button: tries `window.close()`, falls back to `admin.html#content`
+- Styles in `css/edit-mode.css`; `prefers-reduced-motion` supported
+
+## Admin Panel (`admin.html`)
+- Gate-protected (base64 token in `localStorage` key `ss_admin_token`)
+- Two tabs: **Work Library** (film slots 1–5, YouTube URL or video upload ≤20s) and **Content Manager**
+- Content Manager fetches `/api/site-content`, renders editable fields grouped by section per page tab
+- `initContentManager()` runs once (guarded by `contentLoaded` flag); var declarations must appear **before** the `#content` hash-check block to avoid hoisting reset bug
+- Arriving at `admin.html#content` (e.g. from Done Editing) auto-opens Content Manager tab
+
+## D1 Database
+- Binding: `DB` (wrangler.toml)
+- Tables: `films`, `admin_config`, `site_content`
+- Default admin password: `BHAVYA` (stored plain in `admin_config`; change via admin panel)
+
 ## Breakpoints
 - `1080px`: grids → fewer columns
 - `760px`: mobile nav (column, scrollable links), tighter spacing
@@ -85,6 +128,8 @@ images/logo.png
 
 ## Pitfalls (learned)
 1. Never dismiss entry cover before shield exists (`done` flag + early timeout broke mobile/desktop)
-2. `.reveal` at `opacity:0` looks like “black page with scroll” if not unlocked after nav
+2. `.reveal` at `opacity:0` looks like "black page with scroll" if not unlocked after nav
 3. Home beam position ≠ founder beam position (separate `--beam-apex-x`)
 4. `about.html` is the Intent page in nav copy
+5. D1 migrations are NOT auto-applied on deploy — must run via wrangler CLI or D1 MCP tool (`d1_database_query`) manually against production
+6. `var` declarations with initial values that appear after a hash-check block will reset values set inside functions called by that hash-check (JS hoisting gotcha) — always declare content manager vars before the hash-check

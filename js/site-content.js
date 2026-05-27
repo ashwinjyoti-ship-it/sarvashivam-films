@@ -95,11 +95,6 @@
     if (document.querySelector('.edit-mode-frame')) return;
     var frame = document.createElement('div');
     frame.className = 'edit-mode-frame';
-    ['tl', 'tr', 'bl', 'br'].forEach(function (pos) {
-      var c = document.createElement('span');
-      c.className = 'em-corner em-corner-' + pos;
-      frame.appendChild(c);
-    });
     document.body.appendChild(frame);
   }
 

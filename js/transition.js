@@ -1,5 +1,9 @@
 (function () {
-  const WORDS = ['सृजन', 'दृष्टि', 'मौन', 'शिवम्'];
+  var WORDS = ['सृजन', 'दृष्टि', 'मौन', 'शिवम्'];
+  fetch('/api/transition-words')
+    .then(function (r) { return r.json(); })
+    .then(function (w) { if (Array.isArray(w) && w.length) WORDS = w; })
+    .catch(function () {});
   const KEY = 'ss_transition_index';
   const JUST_NAV_KEY = 'ss_just_navigated';
   const SKIP_MAUN_KEY = 'ss_skip_maun';
@@ -103,7 +107,7 @@
           targetUrl = nu.href;
         }
 
-        if (link.hasAttribute('data-no-transition')) {
+        if (link.hasAttribute('data-no-transition') || isEdit) {
           paintRootDark();
           window.location.assign(targetUrl);
           return;

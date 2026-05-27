@@ -605,3 +605,118 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* ---------- Transition Words panel ---------- */
+.tw-panel {
+  margin-top: 40px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.tw-panel-header {
+  margin-bottom: 20px;
+}
+.tw-panel-title {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #f3eee2;
+  margin: 0 0 4px;
+}
+.tw-panel-sub {
+  font-size: 0.78rem;
+  color: #b9af96;
+  margin: 0;
+}
+.tw-word-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  min-height: 40px;
+}
+.tw-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  background: rgba(184,160,106,0.08);
+  border: 1px solid rgba(184,160,106,0.3);
+  border-radius: 8px;
+}
+.tw-chip-word {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  color: #f3eee2;
+  line-height: 1;
+}
+.tw-chip-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #b9af96;
+}
+.tw-chip-del {
+  background: none;
+  border: none;
+  color: #b9af96;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 2px;
+  transition: color .2s;
+}
+.tw-chip-del:hover { color: #cf8080; }
+.tw-chip-del:disabled { opacity: 0.4; cursor: not-allowed; }
+.tw-add-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.tw-input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 6px 14px;
+  flex: 1;
+  min-width: 200px;
+}
+.tw-roman-input {
+  background: none;
+  border: none;
+  outline: none;
+  color: #f3eee2;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.88rem;
+  flex: 1;
+  min-width: 80px;
+}
+.tw-preview {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  color: #b8a06a;
+  line-height: 1;
+  min-width: 36px;
+  text-align: center;
+}
+.tw-label-input {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #f3eee2;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.82rem;
+  width: 180px;
+  transition: border-color .2s;
+}
+.tw-label-input:focus {
+  outline: none;
+  border-color: rgba(184,160,106,0.45);
+}
+.tw-add-btn { white-space: nowrap; }
