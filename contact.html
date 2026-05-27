@@ -8,6 +8,7 @@
   <meta name="theme-color" content="#020202">
   <style>html{background-color:#020202;color-scheme:dark}</style>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/edit-mode.css">
 </head>
 <body>
   <script>try{var e=document.getElementById('ss-entry-shield');if(e)e.remove();sessionStorage.removeItem('ss_entry_cover');}catch(x){}</script>
@@ -16,16 +17,16 @@
       <nav class="nav">
         <a class="brand" href="index.html" aria-label="SARVSHIVAM home" data-transition-word="मौन">
           <img class="brand-logo" src="images/logo.png" alt="SARVSHIVAM logo">
-          <span class="brand-sub">Films • Ideas • Meaning</span>
+          <span class="brand-sub" data-site-key="index.brand.subtext">Films • Ideas • Meaning</span>
         </a>
         <div class="nav-links">
-          <a href="index.html" data-transition-word="मौन">Home</a>
-          <a href="about.html">Intent</a>
-          <a href="work.html">Work</a>
-          <a href="narrative.html">Narrative</a>
-          <a href="founder.html">Founder</a>
-          <a class="active" href="contact.html">Contact</a>
-          <a href="admin.html" data-no-transition>Admin</a>
+          <a href="index.html" data-transition-word="मौन" data-site-key="shared.nav.home">Home</a>
+          <a href="about.html" data-site-key="shared.nav.intent">Intent</a>
+          <a href="work.html" data-site-key="shared.nav.work">Work</a>
+          <a href="narrative.html" data-site-key="shared.nav.narrative">Narrative</a>
+          <a href="founder.html" data-site-key="shared.nav.founder">Founder</a>
+          <a class="active" href="contact.html" data-site-key="shared.nav.contact">Contact</a>
+          <a href="admin.html" data-no-transition data-site-key="shared.nav.admin">Admin</a>
         </div>
       </nav>
     </header>
@@ -33,45 +34,46 @@
     <main class="container section">
       <div class="contact-cta">
         <section class="reveal">
-          <div class="hindi-marker">शिवम्</div>
-          <div class="eyebrow">Contact</div>
-          <h1 class="page-title">Let’s create something that matters.</h1>
-          <p class="page-lead">If the project needs clarity, emotional precision, and a cinematic point of view, start the conversation. The invitation is open.</p>
+          <div class="hindi-marker" data-site-key="contact.marker">शिवम्</div>
+          <div class="eyebrow" data-site-key="contact.hero.eyebrow">Contact</div>
+          <h1 class="page-title" data-site-key="contact.hero.title">Let's create something that matters.</h1>
+          <p class="page-lead" data-site-key="contact.hero.lead">If the project needs clarity, emotional precision, and a cinematic point of view, start the conversation. The invitation is open.</p>
 
           <div class="channels">
             <article class="channel reveal">
-              <small>Email</small>
-              <a href="mailto:hello@sarvshivamfilms.com">hello@sarvshivamfilms.com</a>
+              <small data-site-key="contact.channel1.label">Email</small>
+              <a href="mailto:hello@sarvshivamfilms.com" data-site-key="contact.channel1.value">hello@sarvshivamfilms.com</a>
             </article>
             <article class="channel reveal">
-              <small>Instagram</small>
-              <a href="https://instagram.com/" target="_blank" rel="noreferrer">@sarvshivamfilms</a>
+              <small data-site-key="contact.channel2.label">Instagram</small>
+              <a href="https://instagram.com/" target="_blank" rel="noreferrer" data-site-key="contact.channel2.value">@sarvshivamfilms</a>
             </article>
             <article class="channel reveal">
-              <small>Vimeo</small>
-              <a href="https://vimeo.com/" target="_blank" rel="noreferrer">vimeo.com/sarvshivamfilms</a>
+              <small data-site-key="contact.channel3.label">Vimeo</small>
+              <a href="https://vimeo.com/" target="_blank" rel="noreferrer" data-site-key="contact.channel3.value">vimeo.com/sarvshivamfilms</a>
             </article>
             <article class="channel reveal">
-              <small>YouTube</small>
-              <a href="https://youtube.com/" target="_blank" rel="noreferrer">youtube.com/@sarvshivamfilms</a>
+              <small data-site-key="contact.channel4.label">YouTube</small>
+              <a href="https://youtube.com/" target="_blank" rel="noreferrer" data-site-key="contact.channel4.value">youtube.com/@sarvshivamfilms</a>
             </article>
           </div>
         </section>
 
         <aside class="quote-block reveal">
-          <p>Creation begins in silence. Then shape arrives. Then rhythm. Then the frame remembers what it was always trying to become.</p>
-          <p class="muted">For commissions, collaborations, brand films, and narrative development conversations.</p>
+          <p data-site-key="contact.quote.body">Creation begins in silence. Then shape arrives. Then rhythm. Then the frame remembers what it was always trying to become.</p>
+          <p class="muted" data-site-key="contact.quote.muted">For commissions, collaborations, brand films, and narrative development conversations.</p>
         </aside>
       </div>
     </main>
 
     <footer class="footer">
       <div class="container footer-inner">
-        <div>Creation begins in silence.</div>
-        <div class="footer-devanagari">सर्व शिवमयम्</div>
+        <div data-site-key="contact.footer.left">Creation begins in silence.</div>
+        <div class="footer-devanagari" data-site-key="shared.footer.devanagari">सर्व शिवमयम्</div>
       </div>
     </footer>
   </div>
   <script src="js/transition.js"></script>
+  <script src="js/site-content.js"></script>
 </body>
 </html>

@@ -8,6 +8,7 @@
   <meta name="theme-color" content="#020202">
   <style>html{background-color:#020202;color-scheme:dark}</style>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/edit-mode.css">
 </head>
 <body>
   <script>try{var e=document.getElementById('ss-entry-shield');if(e)e.remove();sessionStorage.removeItem('ss_entry_cover');}catch(x){}</script>
@@ -16,26 +17,26 @@
       <nav class="nav">
         <a class="brand" href="index.html" aria-label="SARVSHIVAM home" data-transition-word="मौन">
           <img class="brand-logo" src="images/logo.png" alt="SARVSHIVAM logo">
-          <span class="brand-sub">Films • Ideas • Meaning</span>
+          <span class="brand-sub" data-site-key="index.brand.subtext">Films • Ideas • Meaning</span>
         </a>
         <div class="nav-links">
-          <a href="index.html" data-transition-word="मौन">Home</a>
-          <a href="about.html">Intent</a>
-          <a href="work.html">Work</a>
-          <a class="active" href="narrative.html">Narrative</a>
-          <a href="founder.html">Founder</a>
-          <a href="contact.html">Contact</a>
-          <a href="admin.html" data-no-transition>Admin</a>
+          <a href="index.html" data-transition-word="मौन" data-site-key="shared.nav.home">Home</a>
+          <a href="about.html" data-site-key="shared.nav.intent">Intent</a>
+          <a href="work.html" data-site-key="shared.nav.work">Work</a>
+          <a class="active" href="narrative.html" data-site-key="shared.nav.narrative">Narrative</a>
+          <a href="founder.html" data-site-key="shared.nav.founder">Founder</a>
+          <a href="contact.html" data-site-key="shared.nav.contact">Contact</a>
+          <a href="admin.html" data-no-transition data-site-key="shared.nav.admin">Admin</a>
         </div>
       </nav>
     </header>
 
     <main class="container section">
       <div class="reveal">
-        <div class="hindi-marker">आगे</div>
-        <div class="eyebrow">Narrative & Originals</div>
-        <h1 class="page-title">The future we are building toward.</h1>
-        <p class="page-lead">Short films, concepts, and long-form narratives in development. This is where SARVSHIVAM moves when the brief ends and the inner voice continues. Presence over volume. Direction over noise.</p>
+        <div class="hindi-marker" data-site-key="narrative.marker">आगे</div>
+        <div class="eyebrow" data-site-key="narrative.hero.eyebrow">Narrative & Originals</div>
+        <h1 class="page-title" data-site-key="narrative.hero.title">The future we are building toward.</h1>
+        <p class="page-lead" data-site-key="narrative.hero.lead">Short films, concepts, and long-form narratives in development. This is where SARVSHIVAM moves when the brief ends and the inner voice continues. Presence over volume. Direction over noise.</p>
       </div>
 
       <div class="panel-grid two section">
@@ -43,48 +44,49 @@
           <h3>Development slate</h3>
           <div class="progress-row">
             <div>
-              <div class="progress-head"><span>Feature concept — mythology / memory</span><span>74%</span></div>
+              <div class="progress-head"><span data-site-key="narrative.progress1.label">Feature concept — mythology / memory</span><span>74%</span></div>
               <div class="progress-track"><div class="progress-bar" style="width:74%"></div></div>
             </div>
             <div>
-              <div class="progress-head"><span>Short narrative — urban solitude</span><span>58%</span></div>
+              <div class="progress-head"><span data-site-key="narrative.progress2.label">Short narrative — urban solitude</span><span>58%</span></div>
               <div class="progress-track"><div class="progress-bar" style="width:58%"></div></div>
             </div>
             <div>
-              <div class="progress-head"><span>Essay film — culture / body / ritual</span><span>41%</span></div>
+              <div class="progress-head"><span data-site-key="narrative.progress3.label">Essay film — culture / body / ritual</span><span>41%</span></div>
               <div class="progress-track"><div class="progress-bar" style="width:41%"></div></div>
             </div>
           </div>
         </section>
 
         <section class="panel ring-wrap reveal">
-          <div class="ring"><span>POINT OF VIEW</span></div>
+          <div class="ring"><span data-site-key="narrative.ring.text">POINT OF VIEW</span></div>
         </section>
       </div>
 
       <section class="card-grid three">
         <article class="card reveal">
-          <h3>Long-form</h3>
-          <p>Stories that can hold contradiction without flattening it. Character first. Atmosphere in service of arc.</p>
+          <h3 data-site-key="narrative.card1.heading">Long-form</h3>
+          <p data-site-key="narrative.card1.body">Stories that can hold contradiction without flattening it. Character first. Atmosphere in service of arc.</p>
         </article>
         <article class="card reveal">
-          <h3>Original IP</h3>
-          <p>Worlds emerging from cultural memory, physical discipline, identity, and spiritual tension.</p>
+          <h3 data-site-key="narrative.card2.heading">Original IP</h3>
+          <p data-site-key="narrative.card2.body">Worlds emerging from cultural memory, physical discipline, identity, and spiritual tension.</p>
         </article>
         <article class="card reveal">
-          <h3>Future collaborations</h3>
-          <p>Selective partnerships with producers, studios, and platforms aligned with depth, patience, and craft.</p>
+          <h3 data-site-key="narrative.card3.heading">Future collaborations</h3>
+          <p data-site-key="narrative.card3.body">Selective partnerships with producers, studios, and platforms aligned with depth, patience, and craft.</p>
         </article>
       </section>
     </main>
 
     <footer class="footer">
       <div class="container footer-inner">
-        <div>This is where intent turns into point of view.</div>
-        <div class="footer-devanagari">सर्व शिवमयम्</div>
+        <div data-site-key="narrative.footer.left">This is where intent turns into point of view.</div>
+        <div class="footer-devanagari" data-site-key="shared.footer.devanagari">सर्व शिवमयम्</div>
       </div>
     </footer>
   </div>
   <script src="js/transition.js"></script>
+  <script src="js/site-content.js"></script>
 </body>
 </html>

@@ -8,27 +8,28 @@
   <meta name="description" content="SARVSHIVAM is a film-first creative studio rooted in storytelling, culture, and intent.">
   <style>html{background-color:#020202;color-scheme:dark}</style>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/edit-mode.css">
 </head>
 <body class="home-page">
   <script>try{var e=document.getElementById('ss-entry-shield');if(e)e.remove();sessionStorage.removeItem('ss_entry_cover');}catch(x){}</script>
   <div class="preloader" data-maun-preloader>
-    <div class="preloader-word">मौन</div>
+    <div class="preloader-word" data-site-key="index.preloader.word">मौन</div>
   </div>
   <div class="page-shell">
     <header class="site-header">
       <nav class="nav">
         <a class="brand" href="index.html" aria-label="SARVSHIVAM home" data-transition-word="मौन">
           <img class="brand-logo" src="images/logo.png" alt="SARVSHIVAM logo">
-          <span class="brand-sub">Films • Ideas • Meaning</span>
+          <span class="brand-sub" data-site-key="index.brand.subtext">Films • Ideas • Meaning</span>
         </a>
         <div class="nav-links">
-          <a class="active" href="index.html" data-transition-word="मौन">Home</a>
-          <a href="about.html">Intent</a>
-          <a href="work.html">Work</a>
-          <a href="narrative.html">Narrative</a>
-          <a href="founder.html">Founder</a>
-          <a href="contact.html">Contact</a>
-          <a href="admin.html" data-no-transition>Admin</a>
+          <a class="active" href="index.html" data-transition-word="मौन" data-site-key="shared.nav.home">Home</a>
+          <a href="about.html" data-site-key="shared.nav.intent">Intent</a>
+          <a href="work.html" data-site-key="shared.nav.work">Work</a>
+          <a href="narrative.html" data-site-key="shared.nav.narrative">Narrative</a>
+          <a href="founder.html" data-site-key="shared.nav.founder">Founder</a>
+          <a href="contact.html" data-site-key="shared.nav.contact">Contact</a>
+          <a href="admin.html" data-no-transition data-site-key="shared.nav.admin">Admin</a>
         </div>
       </nav>
     </header>
@@ -40,13 +41,14 @@
             <h1 class="hero-title">
               <img class="hero-logo" src="images/logo.png" alt="SARVSHIVAM">
             </h1>
-            <p class="hero-film">Films</p>
+            <p class="hero-film" data-site-key="index.hero.subtext">Films</p>
           </div>
-          <p class="hero-story">Stories for the Future.</p>
+          <p class="hero-story" data-site-key="index.hero.bottom">Stories for the Future.</p>
         </div>
       </section>
     </main>
   </div>
   <script src="js/transition.js"></script>
+  <script src="js/site-content.js"></script>
 </body>
 </html>

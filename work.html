@@ -8,6 +8,7 @@
   <meta name="description" content="Selected narrative-driven films from SARVSHIVAM.">
   <style>html{background-color:#020202;color-scheme:dark}</style>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/edit-mode.css">
   <style>
     /* Video card media layer */
     .work-card-media {
@@ -136,33 +137,33 @@
       <nav class="nav">
         <a class="brand" href="index.html" aria-label="SARVSHIVAM home" data-transition-word="मौन">
           <img class="brand-logo" src="images/logo.png" alt="SARVSHIVAM logo">
-          <span class="brand-sub">Films • Ideas • Meaning</span>
+          <span class="brand-sub" data-site-key="index.brand.subtext">Films • Ideas • Meaning</span>
         </a>
         <div class="nav-links">
-          <a href="index.html" data-transition-word="मौन">Home</a>
-          <a href="about.html">Intent</a>
-          <a class="active" href="work.html">Work</a>
-          <a href="narrative.html">Narrative</a>
-          <a href="founder.html">Founder</a>
-          <a href="contact.html">Contact</a>
-          <a href="admin.html" data-no-transition>Admin</a>
+          <a href="index.html" data-transition-word="मौन" data-site-key="shared.nav.home">Home</a>
+          <a href="about.html" data-site-key="shared.nav.intent">Intent</a>
+          <a class="active" href="work.html" data-site-key="shared.nav.work">Work</a>
+          <a href="narrative.html" data-site-key="shared.nav.narrative">Narrative</a>
+          <a href="founder.html" data-site-key="shared.nav.founder">Founder</a>
+          <a href="contact.html" data-site-key="shared.nav.contact">Contact</a>
+          <a href="admin.html" data-no-transition data-site-key="shared.nav.admin">Admin</a>
         </div>
       </nav>
     </header>
 
     <main class="container section">
       <div class="reveal">
-        <div class="hindi-marker">दृष्टि</div>
-        <div class="eyebrow">Work Library</div>
-        <h1 class="page-title">A glimpse of the world we build.</h1>
-        <p class="page-lead">Narrative-driven films for platforms, brands, and moving-image identities. Every frame is intentional. Every story is clean, clear, and emotionally grounded.</p>
+        <div class="hindi-marker" data-site-key="work.marker">दृष्टि</div>
+        <div class="eyebrow" data-site-key="work.hero.eyebrow">Work Library</div>
+        <h1 class="page-title" data-site-key="work.hero.title">A glimpse of the world we build.</h1>
+        <p class="page-lead" data-site-key="work.hero.lead">Narrative-driven films for platforms, brands, and moving-image identities. Every frame is intentional. Every story is clean, clear, and emotionally grounded.</p>
       </div>
 
       <div class="work-controls reveal">
-        <button class="filter-btn active" data-filter="all" type="button">All</button>
-        <button class="filter-btn" data-filter="short-film" type="button">Short Film</button>
-        <button class="filter-btn" data-filter="music-video" type="button">Music Video</button>
-        <button class="filter-btn" data-filter="brand-film" type="button">Brand Film</button>
+        <button class="filter-btn active" data-filter="all" type="button" data-site-key="work.filter.all">All</button>
+        <button class="filter-btn" data-filter="short-film" type="button" data-site-key="work.filter.short">Short Film</button>
+        <button class="filter-btn" data-filter="music-video" type="button" data-site-key="work.filter.music">Music Video</button>
+        <button class="filter-btn" data-filter="brand-film" type="button" data-site-key="work.filter.brand">Brand Film</button>
       </div>
 
       <section class="work-grid">
@@ -177,8 +178,8 @@
 
     <footer class="footer">
       <div class="container footer-inner">
-        <div>Every frame is intentional.</div>
-        <div class="footer-devanagari">सर्व शिवमयम्</div>
+        <div data-site-key="work.footer.left">Every frame is intentional.</div>
+        <div class="footer-devanagari" data-site-key="shared.footer.devanagari">सर्व शिवमयम्</div>
       </div>
     </footer>
   </div>
@@ -193,5 +194,6 @@
 
   <script src="js/transition.js"></script>
   <script src="js/work.js"></script>
+  <script src="js/site-content.js"></script>
 </body>
 </html>

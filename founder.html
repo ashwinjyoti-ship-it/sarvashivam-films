@@ -8,6 +8,7 @@
   <meta name="description" content="Founder presence and biography for Bhavya Attrey.">
   <style>html{background-color:#020202;color-scheme:dark}</style>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/edit-mode.css">
 </head>
 <body class="founder-page">
   <script>try{var e=document.getElementById('ss-entry-shield');if(e)e.remove();sessionStorage.removeItem('ss_entry_cover');}catch(x){}</script>
@@ -16,16 +17,16 @@
       <nav class="nav">
         <a class="brand" href="index.html" aria-label="SARVSHIVAM home" data-transition-word="मौन">
           <img class="brand-logo" src="images/logo.png" alt="SARVSHIVAM logo">
-          <span class="brand-sub">Films • Ideas • Meaning</span>
+          <span class="brand-sub" data-site-key="index.brand.subtext">Films • Ideas • Meaning</span>
         </a>
         <div class="nav-links">
-          <a href="index.html" data-transition-word="मौन">Home</a>
-          <a href="about.html">Intent</a>
-          <a href="work.html">Work</a>
-          <a href="narrative.html">Narrative</a>
-          <a class="active" href="founder.html">Founder</a>
-          <a href="contact.html">Contact</a>
-          <a href="admin.html" data-no-transition>Admin</a>
+          <a href="index.html" data-transition-word="मौन" data-site-key="shared.nav.home">Home</a>
+          <a href="about.html" data-site-key="shared.nav.intent">Intent</a>
+          <a href="work.html" data-site-key="shared.nav.work">Work</a>
+          <a href="narrative.html" data-site-key="shared.nav.narrative">Narrative</a>
+          <a class="active" href="founder.html" data-site-key="shared.nav.founder">Founder</a>
+          <a href="contact.html" data-site-key="shared.nav.contact">Contact</a>
+          <a href="admin.html" data-no-transition data-site-key="shared.nav.admin">Admin</a>
         </div>
       </nav>
     </header>
@@ -33,20 +34,20 @@
     <main class="container section">
       <div class="founder-grid">
         <section class="reveal">
-          <div class="hindi-marker">उपस्थिति</div>
-          <div class="eyebrow">Founder Presence</div>
-          <h1 class="page-title">Bhavya Attrey</h1>
-          <p class="page-lead">Filmmaker. Storyteller. Strength &amp; Conditioning Coach. Student of Hindu Studies. Cricketer. Working at the intersection of culture, performance, and cinematic expression.</p>
+          <div class="hindi-marker" data-site-key="founder.marker">उपस्थिति</div>
+          <div class="eyebrow" data-site-key="founder.hero.eyebrow">Founder Presence</div>
+          <h1 class="page-title" data-site-key="founder.hero.title">Bhavya Attrey</h1>
+          <p class="page-lead" data-site-key="founder.hero.lead">Filmmaker. Storyteller. Strength &amp; Conditioning Coach. Student of Hindu Studies. Cricketer. Working at the intersection of culture, performance, and cinematic expression.</p>
 
           <div class="panel reveal" style="margin-top:28px;">
-            <h3>The hand behind the vision</h3>
-            <p>The studio language comes from lived texture — discipline, observation, body, memory, and the ability to sit with silence long enough for the real thing to arrive. The founder page is not a pedestal. It is context.</p>
+            <h3 data-site-key="founder.panel.heading">The hand behind the vision</h3>
+            <p data-site-key="founder.panel.body">The studio language comes from lived texture — discipline, observation, body, memory, and the ability to sit with silence long enough for the real thing to arrive. The founder page is not a pedestal. It is context.</p>
             <ul class="bio-list">
-              <li>Sees storytelling as embodied practice.</li>
-              <li>Works across commercial briefs and original narrative development.</li>
-              <li>Draws from cultural inquiry without reducing it to surface signals.</li>
-              <li>Builds visual environments that feel composed, not crowded.</li>
-              <li>Leads with restraint, then lets the image speak.</li>
+              <li data-site-key="founder.bio.list.1">Sees storytelling as embodied practice.</li>
+              <li data-site-key="founder.bio.list.2">Works across commercial briefs and original narrative development.</li>
+              <li data-site-key="founder.bio.list.3">Draws from cultural inquiry without reducing it to surface signals.</li>
+              <li data-site-key="founder.bio.list.4">Builds visual environments that feel composed, not crowded.</li>
+              <li data-site-key="founder.bio.list.5">Leads with restraint, then lets the image speak.</li>
             </ul>
           </div>
         </section>
@@ -55,10 +56,11 @@
 
     <footer class="footer">
       <div class="container footer-inner footer-inner--end">
-        <div class="footer-devanagari">सर्व शिवमयम्</div>
+        <div class="footer-devanagari" data-site-key="shared.footer.devanagari">सर्व शिवमयम्</div>
       </div>
     </footer>
   </div>
   <script src="js/transition.js"></script>
+  <script src="js/site-content.js"></script>
 </body>
 </html>

@@ -350,4 +350,231 @@
       else showGate();
     }).catch(() => showGate());
   }
+
+  /* ---------- Admin tab switching ---------- */
+
+  var currentAdminTab = 'films';
+
+  document.querySelectorAll('.admin-nav-tab').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var target = tab.dataset.tab;
+      document.querySelectorAll('.admin-nav-tab').forEach(function (t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+      document.querySelectorAll('.admin-tab-pane').forEach(function (p) { p.classList.remove('active'); });
+      var pane = document.getElementById('admin-tab-' + target);
+      if (pane) pane.classList.add('active');
+      currentAdminTab = target;
+      if (target === 'content') initContentManager();
+    });
+  });
+
+  /* ---------- Content Manager ---------- */
+
+  var contentData = null;
+  var contentMeta = null;
+  var contentLoaded = false;
+
+  function getPageLabel(page) {
+    var labels = { index: 'Home', about: 'Intent', work: 'Work', narrative: 'Narrative', founder: 'Founder', contact: 'Contact', shared: 'Shared' };
+    return labels[page] || page;
+  }
+
+  function getSectionLabel(section) {
+    if (section === 'hero') return 'Hero section';
+    if (section === 'marker') return 'Page marker';
+    if (section === 'preloader') return 'Preloader';
+    if (section === 'brand') return 'Brand';
+    if (section === 'panel1') return 'Panel 1';
+    if (section === 'panel2') return 'Panel 2';
+    if (section === 'panel') return 'Panel';
+    if (section === 'pillars') return 'Pillars section';
+    if (section === 'card1') return 'Card 1';
+    if (section === 'card2') return 'Card 2';
+    if (section === 'card3') return 'Card 3';
+    if (section === 'progress') return 'Development slate';
+    if (section === 'ring') return 'Ring text';
+    if (section === 'bio') return 'Biography';
+    if (section === 'channel1') return 'Channel 1';
+    if (section === 'channel2') return 'Channel 2';
+    if (section === 'channel3') return 'Channel 3';
+    if (section === 'channel4') return 'Channel 4';
+    if (section === 'quote') return 'Quote';
+    if (section === 'footer') return 'Footer';
+    if (section === 'nav') return 'Navigation';
+    if (section === 'filters') return 'Filter buttons';
+    return section;
+  }
+
+  function groupBySection(meta) {
+    var groups = {};
+    for (var i = 0; i < meta.length; i++) {
+      var item = meta[i];
+      var key = item.page + '::' + item.section;
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(item);
+    }
+    return groups;
+  }
+
+  function renderContentCards(page) {
+    var container = document.getElementById('content-cards');
+    if (!container) return;
+    if (!contentMeta) { container.innerHTML = '<p style="color:#b9af96">Loading content…</p>'; return; }
+
+    var filtered = contentMeta.filter(function (item) { return item.page === page; });
+    var groups = groupBySection(filtered);
+    var html = '';
+
+    var keys = Object.keys(groups).sort();
+    for (var g = 0; g < keys.length; g++) {
+      var group = groups[keys[g]];
+      var section = group[0].section;
+      html += '<div class="content-card" data-section="' + section + '">';
+      html += '<div class="content-card-header">';
+      html += '<div class="content-card-label">' + getSectionLabel(section) + '</div>';
+      html += '<div class="content-card-sub">' + group.length + ' field' + (group.length !== 1 ? 's' : '') + '</div>';
+      html += '</div>';
+
+      for (var f = 0; f < group.length; f++) {
+        var item = group[f];
+        var val = contentData[item.content_key] || '';
+        var isLong = val.length > 60 || item.element_type === 'body' || item.element_type === 'lead' || item.element_type === 'list-item';
+
+        html += '<div class="content-field" data-key="' + item.content_key + '">';
+        html += '<div class="content-field-key">' + item.content_key.replace(page + '.', '') + '</div>';
+        html += '<div class="content-field-row">';
+        if (isLong) {
+          html += '<textarea class="cm-input" data-max="' + item.max_chars + '" rows="' + (Math.ceil(val.length / 50) || 2) + '">' + escHtml(val) + '</textarea>';
+        } else {
+          html += '<input class="cm-input" type="text" data-max="' + item.max_chars + '" value="' + escAttr(val) + '">';
+        }
+        html += '</div>';
+        html += '<div class="content-field-counter">' + val.length + '/' + item.max_chars + '</div>';
+        html += '</div>';
+      }
+
+      html += '<div class="content-card-actions">';
+      html += '<button class="content-save-btn" data-section="' + section + '">Save ' + getSectionLabel(section) + '</button>';
+      html += '<span class="slot-status cm-status" data-section="' + section + '"></span>';
+      html += '</div>';
+      html += '</div>';
+    }
+
+    if (!html) {
+      html = '<p style="color:#b9af96;padding:24px 0">No content fields for this page.</p>';
+    }
+    container.innerHTML = html;
+
+    /* bind char counters */
+    container.querySelectorAll('.cm-input').forEach(function (input) {
+      var counter = input.closest('.content-field').querySelector('.content-field-counter');
+      var max = parseInt(input.dataset.max, 10);
+
+      function update() {
+        var len = input.value.length;
+        counter.textContent = len + '/' + max;
+        if (len > max) {
+          counter.classList.add('over');
+          input.classList.add('cm-over');
+        } else {
+          counter.classList.remove('over');
+          input.classList.remove('cm-over');
+        }
+      }
+      input.addEventListener('input', update);
+      update();
+    });
+
+    /* bind save buttons */
+    container.querySelectorAll('.content-save-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var sectionName = btn.dataset.section;
+        var card = btn.closest('.content-card');
+        var status = card.querySelector('.cm-status');
+        var inputs = card.querySelectorAll('.cm-input');
+        var updates = [];
+
+        for (var i = 0; i < inputs.length; i++) {
+          var inp = inputs[i];
+          var field = inp.closest('.content-field');
+          var key = field.dataset.key;
+          var val = inp.value;
+          var max = parseInt(inp.dataset.max, 10);
+
+          if (val.length > max) {
+            status.textContent = 'Fix overflow before saving';
+            status.className = 'slot-status visible error';
+            return;
+          }
+          updates.push({ content_key: key, content_value: val });
+        }
+
+        btn.disabled = true;
+        status.textContent = 'Saving…';
+        status.className = 'slot-status visible';
+
+        fetch('/api/admin/site-content', {
+          method: 'PUT',
+          headers: Object.assign({ 'Content-Type': 'application/json' }, authHeaders()),
+          body: JSON.stringify({ updates: updates })
+        }).then(function (r) {
+          if (!r.ok && r.status === 401) { showGate(); return null; }
+          return r.json().then(function (data) { return { ok: r.ok, data: data }; });
+        }).then(function (result) {
+          if (!result) return;
+          if (!result.ok || (result.data.errors && result.data.errors.length > 0)) {
+            var errs = result.data.errors || [];
+            status.textContent = errs.length > 0 ? errs[0].error : 'Save failed';
+            status.className = 'slot-status visible error';
+            return;
+          }
+          for (var j = 0; j < updates.length; j++) {
+            contentData[updates[j].content_key] = updates[j].content_value;
+          }
+          status.textContent = 'Saved';
+          status.className = 'slot-status visible success';
+        }).catch(function () {
+          status.textContent = 'Network error';
+          status.className = 'slot-status visible error';
+        }).finally(function () {
+          btn.disabled = false;
+          setTimeout(function () { status.classList.remove('visible'); }, 3000);
+        });
+      });
+    });
+  }
+
+  function escHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function escAttr(s) {
+    return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function initContentManager() {
+    if (contentLoaded) return;
+    contentLoaded = true;
+
+    fetch('/api/site-content')
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (!data || !data.content) return;
+        contentData = data.content;
+        contentMeta = data.meta;
+        renderContentCards('index');
+      })
+      .catch(function () {
+        document.getElementById('content-cards').innerHTML = '<p style="color:#cf8080">Failed to load content data.</p>';
+      });
+
+    /* page tab switching */
+    document.querySelectorAll('.content-page-tab').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        document.querySelectorAll('.content-page-tab').forEach(function (t) { t.classList.remove('active'); });
+        tab.classList.add('active');
+        renderContentCards(tab.dataset.page);
+      });
+    });
+  }
 })();
