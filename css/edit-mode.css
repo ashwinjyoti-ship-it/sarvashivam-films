@@ -61,7 +61,7 @@ body.edit-mode-active {
   padding-top: 52px;
 }
 
-/* Siri-style frame glow in edit mode */
+/* Edit mode frame — ambient glow (background role only) */
 .edit-mode-frame {
   position: fixed;
   inset: 0;
@@ -74,46 +74,36 @@ body.edit-mode-active {
   inset: 8px;
   border-radius: 22px;
   box-shadow:
-    0 0 0 1px rgba(184,160,106,0.22),
-    0 0 28px rgba(184,160,106,0.18),
-    0 0 80px rgba(184,160,106,0.10);
-  opacity: 0.95;
-  animation: editModeGlowPulse 3.6s ease-in-out infinite;
+    0 0 0 1px rgba(184,160,106,0.10),
+    0 0 40px rgba(184,160,106,0.07);
+  opacity: 0.3;
 }
-.edit-mode-frame::after {
-  content: "";
-  position: absolute;
-  inset: 8px;
-  border-radius: 22px;
-  background: conic-gradient(
-    from 180deg,
-    rgba(184,160,106,0.00),
-    rgba(184,160,106,0.26),
-    rgba(243,238,226,0.16),
-    rgba(184,160,106,0.26),
-    rgba(184,160,106,0.00)
-  );
-  opacity: 0.65;
-  filter: blur(6px);
-  animation: editModeGlowSweep 5.2s linear infinite;
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  padding: 2px; /* ring thickness */
+
+/* Camera viewfinder corners */
+.em-corner {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  pointer-events: none;
+  z-index: 2147483644;
+  opacity: 0;
+  animation: emCornerIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+             emCornerPulse 3.8s ease-in-out 0.45s infinite;
 }
-@keyframes editModeGlowPulse {
-  0%, 100% { opacity: 0.72; }
-  50% { opacity: 1; }
+.em-corner-tl { top: 14px;    left: 14px;    border-top: 1.5px solid #b8a06a; border-left: 1.5px solid #b8a06a;    --cx: -10px; --cy: -10px; }
+.em-corner-tr { top: 14px;    right: 14px;   border-top: 1.5px solid #b8a06a; border-right: 1.5px solid #b8a06a;   --cx:  10px; --cy: -10px; }
+.em-corner-bl { bottom: 14px; left: 14px;    border-bottom: 1.5px solid #b8a06a; border-left: 1.5px solid #b8a06a; --cx: -10px; --cy:  10px; }
+.em-corner-br { bottom: 14px; right: 14px;   border-bottom: 1.5px solid #b8a06a; border-right: 1.5px solid #b8a06a; --cx:  10px; --cy:  10px; }
+@keyframes emCornerIn {
+  from { opacity: 0; transform: translate(var(--cx), var(--cy)) scale(0.85); }
+  to   { opacity: 0.75; transform: translate(0, 0) scale(1); }
 }
-@keyframes editModeGlowSweep {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+@keyframes emCornerPulse {
+  0%, 100% { opacity: 0.50; }
+  50%       { opacity: 0.90; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .edit-mode-frame::before,
-  .edit-mode-frame::after {
-    animation: none;
-  }
+  .em-corner { animation: none; opacity: 0.65; }
 }
 
 /* Editable element outlines */
