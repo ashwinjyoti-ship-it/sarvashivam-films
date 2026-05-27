@@ -364,7 +364,7 @@
       var pane = document.getElementById('admin-tab-' + target);
       if (pane) pane.classList.add('active');
       currentAdminTab = target;
-      if (target === 'content') initContentManager();
+      if (target === 'content') { initContentManager(); initTransitionWords(); }
     });
   });
 
@@ -590,4 +590,199 @@
       });
     });
   }
+
+  /* ---------- ITRANS → Devanagari transliterator ---------- */
+
+  function itransToDevanagari(text) {
+    /* Consonants — longer sequences first to avoid prefix ambiguity */
+    var C = [
+      ['ksh','क्ष'],['jny','ज्ञ'],
+      ['kh','ख'],['gh','घ'],['Chh','छ'],['chh','छ'],['Ch','छ'],['ch','च'],
+      ['jh','झ'],['Th','ठ'],['Dh','ढ'],['th','थ'],['dh','ध'],
+      ['ph','फ'],['bh','भ'],['sh','श'],['Sh','ष'],['sh','श'],
+      ['k','क'],['g','ग'],['c','च'],['j','ज'],
+      ['T','ट'],['D','ड'],['N','ण'],
+      ['t','त'],['d','द'],['n','न'],
+      ['p','प'],['b','ब'],['m','म'],
+      ['y','य'],['r','र'],['l','ल'],['v','व'],['w','व'],
+      ['s','स'],['h','ह'],['L','ळ']
+    ];
+    /* Vowels — longer sequences first */
+    var V = [
+      ['aa','आ','ा'],['A','आ','ा'],
+      ['ii','ई','ी'],['I','ई','ी'],
+      ['uu','ऊ','ू'],['U','ऊ','ू'],
+      ['RRi','ऋ','ृ'],['ri','ऋ','ृ'],
+      ['ai','ऐ','ै'],['au','औ','ौ'],
+      ['e','ए','े'],['o','ओ','ो'],
+      ['i','इ','ि'],['u','उ','ु'],
+      ['a','अ','']
+    ];
+    var HALANT = '्';
+
+    function matchAt(str, pos, table) {
+      for (var k = 0; k < table.length; k++) {
+        var seq = table[k][0];
+        if (str.substr(pos, seq.length) === seq) return table[k];
+      }
+      return null;
+    }
+
+    var out = '';
+    var i = 0;
+    var afterConsonant = false;
+
+    while (i < text.length) {
+      /* Special chars */
+      if (text[i] === 'M') { out += 'ं'; i++; afterConsonant = false; continue; }
+      if (text[i] === 'H') { out += 'ः'; i++; afterConsonant = false; continue; }
+      if (text[i] === ' ' || text[i] === '-') {
+        if (afterConsonant) { /* inherent a already implicit */ }
+        out += text[i] === ' ' ? ' ' : '';
+        i++; afterConsonant = false; continue;
+      }
+
+      var vm = matchAt(text, i, V);
+      if (vm) {
+        /* vowel */
+        if (afterConsonant) {
+          out += vm[2]; /* vowel mark; empty string for inherent 'a' */
+        } else {
+          out += vm[1]; /* standalone vowel */
+        }
+        i += vm[0].length;
+        afterConsonant = false;
+        continue;
+      }
+
+      var cm = matchAt(text, i, C);
+      if (cm) {
+        if (afterConsonant) {
+          out += HALANT; /* suppress inherent a between consonants */
+        }
+        out += cm[1];
+        i += cm[0].length;
+        afterConsonant = true;
+        continue;
+      }
+
+      /* Unknown char — pass through */
+      out += text[i];
+      i++;
+      afterConsonant = false;
+    }
+
+    return out;
+  }
+
+  /* ---------- Transition Words manager ---------- */
+
+  var twLoaded = false;
+
+  function initTransitionWords() {
+    if (twLoaded) return;
+    twLoaded = true;
+    loadTransitionWords();
+
+    document.getElementById('tw-roman').addEventListener('input', function () {
+      var devanagari = itransToDevanagari(this.value.trim());
+      document.getElementById('tw-preview').textContent = devanagari || '—';
+    });
+
+    document.getElementById('tw-add-btn').addEventListener('click', function () {
+      var roman = document.getElementById('tw-roman').value.trim();
+      var word = itransToDevanagari(roman);
+      var label = document.getElementById('tw-label').value.trim();
+      var status = document.getElementById('tw-status');
+
+      if (!word || word === '—') {
+        status.textContent = 'Enter a romanised word first';
+        status.className = 'slot-status visible error';
+        setTimeout(function () { status.classList.remove('visible'); }, 3000);
+        return;
+      }
+
+      this.disabled = true;
+      status.textContent = 'Adding…';
+      status.className = 'slot-status visible';
+
+      fetch('/api/admin/transition-words', {
+        method: 'POST',
+        headers: Object.assign({ 'Content-Type': 'application/json' }, authHeaders()),
+        body: JSON.stringify({ word: word, label: label })
+      }).then(function (r) {
+        if (r.status === 401) { showGate(); return null; }
+        return r.json().then(function (d) { return { ok: r.ok, data: d }; });
+      }).then(function (result) {
+        if (!result) return;
+        if (!result.ok) {
+          status.textContent = result.data.error || 'Failed';
+          status.className = 'slot-status visible error';
+          return;
+        }
+        document.getElementById('tw-roman').value = '';
+        document.getElementById('tw-label').value = '';
+        document.getElementById('tw-preview').textContent = '—';
+        status.textContent = 'Added';
+        status.className = 'slot-status visible success';
+        loadTransitionWords();
+      }).catch(function () {
+        status.textContent = 'Network error';
+        status.className = 'slot-status visible error';
+      }).finally(function () {
+        document.getElementById('tw-add-btn').disabled = false;
+        setTimeout(function () { status.classList.remove('visible'); }, 3000);
+      });
+    });
+  }
+
+  function loadTransitionWords() {
+    fetch('/api/admin/transition-words', { headers: authHeaders() })
+      .then(function (r) {
+        if (r.status === 401) { showGate(); return null; }
+        return r.json();
+      })
+      .then(function (words) {
+        if (!words) return;
+        renderTransitionWords(words);
+      })
+      .catch(function () {
+        document.getElementById('tw-word-list').innerHTML =
+          '<p style="color:#cf8080">Failed to load transition words.</p>';
+      });
+  }
+
+  function renderTransitionWords(words) {
+    var list = document.getElementById('tw-word-list');
+    if (!words.length) {
+      list.innerHTML = '<p style="color:#b9af96">No words yet.</p>';
+      return;
+    }
+    var html = '';
+    for (var i = 0; i < words.length; i++) {
+      var w = words[i];
+      html += '<div class="tw-chip" data-id="' + w.id + '">';
+      html += '<span class="tw-chip-word">' + escHtml(w.word) + '</span>';
+      if (w.label) html += '<span class="tw-chip-label">' + escHtml(w.label) + '</span>';
+      html += '<button class="tw-chip-del" data-id="' + w.id + '" title="Remove">&times;</button>';
+      html += '</div>';
+    }
+    list.innerHTML = html;
+
+    list.querySelectorAll('.tw-chip-del').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = Number(btn.dataset.id);
+        btn.disabled = true;
+        fetch('/api/admin/transition-words', {
+          method: 'DELETE',
+          headers: Object.assign({ 'Content-Type': 'application/json' }, authHeaders()),
+          body: JSON.stringify({ id: id })
+        }).then(function (r) {
+          if (r.status === 401) { showGate(); return; }
+          loadTransitionWords();
+        }).catch(function () { btn.disabled = false; });
+      });
+    });
+  }
+
 })();
