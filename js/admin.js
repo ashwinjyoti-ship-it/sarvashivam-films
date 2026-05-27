@@ -368,6 +368,13 @@
     });
   });
 
+  /* ---------- Content Manager ---------- */
+
+  var contentData = null;
+  var contentMeta = null;
+  var contentLoaded = false;
+  var contentActivePage = 'index';
+
   /* If arriving from edit mode, open Content Manager tab */
   try {
     if (window.location.hash === '#content') {
@@ -375,13 +382,6 @@
       if (contentTab) contentTab.click();
     }
   } catch (e) {}
-
-  /* ---------- Content Manager ---------- */
-
-  var contentData = null;
-  var contentMeta = null;
-  var contentLoaded = false;
-  var contentActivePage = 'index';
 
   function getPageLabel(page) {
     var labels = { index: 'Home', about: 'Intent', work: 'Work', narrative: 'Narrative', founder: 'Founder', contact: 'Contact', shared: 'Shared' };
