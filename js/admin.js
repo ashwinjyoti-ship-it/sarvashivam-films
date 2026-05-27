@@ -368,11 +368,20 @@
     });
   });
 
+  /* If arriving from edit mode, open Content Manager tab */
+  try {
+    if (window.location.hash === '#content') {
+      var contentTab = document.querySelector('.admin-nav-tab[data-tab="content"]');
+      if (contentTab) contentTab.click();
+    }
+  } catch (e) {}
+
   /* ---------- Content Manager ---------- */
 
   var contentData = null;
   var contentMeta = null;
   var contentLoaded = false;
+  var contentActivePage = 'index';
 
   function getPageLabel(page) {
     var labels = { index: 'Home', about: 'Intent', work: 'Work', narrative: 'Narrative', founder: 'Founder', contact: 'Contact', shared: 'Shared' };
@@ -559,10 +568,13 @@
     fetch('/api/site-content')
       .then(function (r) { return r.json(); })
       .then(function (data) {
-        if (!data || !data.content) return;
+        if (!data || !data.content || !Array.isArray(data.meta)) {
+          document.getElementById('content-cards').innerHTML = '<p style="color:#cf8080">No content data found. Ensure the database is configured and migrations have run.</p>';
+          return;
+        }
         contentData = data.content;
         contentMeta = data.meta;
-        renderContentCards('index');
+        renderContentCards(contentActivePage || 'index');
       })
       .catch(function () {
         document.getElementById('content-cards').innerHTML = '<p style="color:#cf8080">Failed to load content data.</p>';
@@ -573,7 +585,8 @@
       tab.addEventListener('click', function () {
         document.querySelectorAll('.content-page-tab').forEach(function (t) { t.classList.remove('active'); });
         tab.classList.add('active');
-        renderContentCards(tab.dataset.page);
+        contentActivePage = tab.dataset.page || 'index';
+        renderContentCards(contentActivePage);
       });
     });
   }

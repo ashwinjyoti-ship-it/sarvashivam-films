@@ -76,15 +76,26 @@
     bar.className = 'edit-mode-bar';
     bar.innerHTML =
       '<div class="edit-mode-bar-left">' +
-        '<a href="admin.html" class="edit-mode-bar-back" data-no-transition>&larr; Back to Admin</a>' +
+        '<a href="admin.html#content" class="edit-mode-bar-back" data-no-transition>&larr; Back to Admin</a>' +
         '<span class="edit-mode-bar-label">Site Content Editing</span>' +
       '</div>' +
       '<button class="edit-mode-bar-done" id="edit-mode-done">Done Editing</button>';
     document.body.insertBefore(bar, document.body.firstChild);
     document.getElementById('edit-mode-done').addEventListener('click', function () {
-      window.close();
+      // window.close() is blocked unless opened by script; fall back to admin.
+      try { window.close(); } catch (e) {}
+      setTimeout(function () {
+        try { window.location.assign('admin.html#content'); } catch (e) {}
+      }, 120);
     });
     document.body.classList.add('edit-mode-active');
+  }
+
+  function ensureEditFrame() {
+    if (document.querySelector('.edit-mode-frame')) return;
+    var frame = document.createElement('div');
+    frame.className = 'edit-mode-frame';
+    document.body.appendChild(frame);
   }
 
   function createInlinePopup(target, key, currentValue, maxChars) {
@@ -226,6 +237,7 @@
     isEditMode = true;
     document.documentElement.classList.add('is-edit-mode');
     createEditBar();
+    ensureEditFrame();
 
     var elements = document.querySelectorAll('[data-site-key]');
     for (var i = 0; i < elements.length; i++) {

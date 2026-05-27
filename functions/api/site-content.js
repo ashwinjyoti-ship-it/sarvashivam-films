@@ -1,7 +1,7 @@
 export async function onRequestGet({ env }) {
   try {
     const { results } = await env.DB.prepare(
-      'SELECT content_key, content_value, max_chars FROM site_content ORDER BY content_key'
+      'SELECT content_key, content_value, max_chars, page, section, element_type FROM site_content ORDER BY content_key'
     ).all();
     const content = {};
     results.forEach(function (r) {
