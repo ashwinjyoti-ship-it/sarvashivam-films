@@ -61,6 +61,61 @@ body.edit-mode-active {
   padding-top: 52px;
 }
 
+/* Siri-style frame glow in edit mode */
+.edit-mode-frame {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483643;
+  pointer-events: none;
+}
+.edit-mode-frame::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 22px;
+  box-shadow:
+    0 0 0 1px rgba(184,160,106,0.22),
+    0 0 28px rgba(184,160,106,0.18),
+    0 0 80px rgba(184,160,106,0.10);
+  opacity: 0.95;
+  animation: editModeGlowPulse 3.6s ease-in-out infinite;
+}
+.edit-mode-frame::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 22px;
+  background: conic-gradient(
+    from 180deg,
+    rgba(184,160,106,0.00),
+    rgba(184,160,106,0.26),
+    rgba(243,238,226,0.16),
+    rgba(184,160,106,0.26),
+    rgba(184,160,106,0.00)
+  );
+  opacity: 0.65;
+  filter: blur(6px);
+  animation: editModeGlowSweep 5.2s linear infinite;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 2px; /* ring thickness */
+}
+@keyframes editModeGlowPulse {
+  0%, 100% { opacity: 0.72; }
+  50% { opacity: 1; }
+}
+@keyframes editModeGlowSweep {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .edit-mode-frame::before,
+  .edit-mode-frame::after {
+    animation: none;
+  }
+}
+
 /* Editable element outlines */
 .has-edit-mode [data-site-key].editable,
 .is-edit-mode [data-site-key].editable {
