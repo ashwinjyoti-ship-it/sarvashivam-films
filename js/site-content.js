@@ -142,6 +142,20 @@
     var actions = document.createElement('div');
     actions.className = 'edit-popup-actions';
 
+    var goBtn = null;
+    if (target && target.tagName === 'A') {
+      goBtn = document.createElement('button');
+      goBtn.className = 'edit-popup-btn edit-popup-btn-go';
+      goBtn.textContent = 'Open Link';
+      goBtn.addEventListener('click', function () {
+        var href = target.getAttribute('href');
+        if (!href) return;
+        try {
+          window.location.assign(href);
+        } catch (e) {}
+      });
+    }
+
     var cancelBtn = document.createElement('button');
     cancelBtn.className = 'edit-popup-btn edit-popup-btn-cancel';
     cancelBtn.textContent = 'Cancel';
@@ -198,6 +212,7 @@
       });
     });
 
+    if (goBtn) actions.appendChild(goBtn);
     actions.appendChild(cancelBtn);
     actions.appendChild(saveBtn);
     footer.appendChild(counter);
@@ -244,6 +259,7 @@
       (function (el) {
         el.classList.add('editable');
         el.addEventListener('click', function (e) {
+          if (el.tagName === 'A') e.preventDefault();
           if (activePopup) {
             if (activePopup.target === el) return;
             closePopup();
