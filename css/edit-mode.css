@@ -61,7 +61,7 @@ body.edit-mode-active {
   padding-top: 52px;
 }
 
-/* True aura: tighter ambient edge glow with richer color */
+/* Edit mode watermark (replaces aura) */
 .edit-mode-frame {
   position: fixed;
   inset: 0;
@@ -69,66 +69,56 @@ body.edit-mode-active {
   pointer-events: none;
   box-sizing: border-box;
   border: 0;
-  background:
-    radial-gradient(78% 26% at 50% -8%, rgba(62,224,255,0.34), transparent 58%),
-    radial-gradient(78% 26% at 50% 108%, rgba(255,86,191,0.3), transparent 58%),
-    radial-gradient(26% 96% at -5% 50%, rgba(130,102,255,0.36), transparent 56%),
-    radial-gradient(26% 96% at 105% 50%, rgba(255,185,92,0.34), transparent 56%);
-  filter: saturate(148%) contrast(110%);
-  opacity: 0.9;
-  animation: editModeAuraShift 16s linear infinite;
-}
-
-.edit-mode-frame::before,
-.edit-mode-frame::after {
-  content: '';
-  position: absolute;
-  inset: -4%;
-  border-radius: 24px;
-  pointer-events: none;
+  background: transparent;
 }
 
 .edit-mode-frame::before {
-  background:
-    radial-gradient(30% 30% at 7% 9%, rgba(62,224,255,0.4), transparent 64%),
-    radial-gradient(30% 30% at 93% 8%, rgba(130,102,255,0.38), transparent 64%),
-    radial-gradient(30% 30% at 8% 92%, rgba(255,86,191,0.36), transparent 64%),
-    radial-gradient(30% 30% at 93% 92%, rgba(255,185,92,0.34), transparent 64%);
-  filter: blur(34px);
-  opacity: 0.5;
-  animation: editModeAuraPulse 4.5s ease-in-out infinite;
+  content: 'EDIT MODE';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-18deg);
+  font-family: 'Impact', 'Arial Black', 'Inter', sans-serif;
+  font-size: clamp(3.4rem, 14vw, 12rem);
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: rgba(184, 160, 106, 0.12);
+  -webkit-text-stroke: 1px rgba(184, 160, 106, 0.2);
+  text-shadow:
+    0 0 1px rgba(0, 0, 0, 0.25),
+    0 0 18px rgba(184, 160, 106, 0.08);
+  white-space: nowrap;
 }
 
 .edit-mode-frame::after {
-  background:
-    conic-gradient(from 30deg at 50% 50%,
-      rgba(62,224,255,0.24),
-      rgba(130,102,255,0.22),
-      rgba(255,86,191,0.2),
-      rgba(255,185,92,0.22),
-      rgba(62,224,255,0.24));
-  filter: blur(46px);
-  opacity: 0.26;
-  animation: editModeAuraSpin 20s linear infinite;
+  content: 'EDIT MODE';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-18deg);
+  font-family: 'Impact', 'Arial Black', 'Inter', sans-serif;
+  font-size: clamp(3.4rem, 14vw, 12rem);
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(184, 160, 106, 0.12);
+  filter: blur(1px);
+  white-space: nowrap;
 }
 
-@keyframes editModeAuraShift {
-  0% { filter: hue-rotate(0deg) saturate(116%); }
-  50% { filter: hue-rotate(180deg) saturate(130%); }
-  100% { filter: hue-rotate(360deg) saturate(116%); }
+@media (max-width: 760px) {
+  .edit-mode-frame::before,
+  .edit-mode-frame::after {
+    letter-spacing: 0.1em;
+    transform: translate(-50%, -50%) rotate(-14deg);
+  }
 }
 
-@keyframes editModeAuraSpin {
-  from { transform: rotate(0deg) scale(1); }
-  to { transform: rotate(360deg) scale(1.03); }
-}
-
-@keyframes editModeAuraPulse {
-  0%, 100% { opacity: 0.46; }
-  50% { opacity: 0.7; }
-}
 @media (prefers-reduced-motion: reduce) {
-  .edit-mode-frame,
   .edit-mode-frame::before,
   .edit-mode-frame::after { animation: none; }
 }
