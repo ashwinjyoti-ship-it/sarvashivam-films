@@ -68,32 +68,31 @@ body.edit-mode-active {
   z-index: 2147483643;
   pointer-events: none;
   box-sizing: border-box;
-  --em-aura-opacity: 0.78;
-  --em-aura-blur: 22px;
-  --em-edge-size: 12px;
-  --em-border-width: 16px;
+  --em-aura-opacity: 0.6;
+  --em-aura-blur: 34px;
+  --em-edge-size: 28px;
+  --em-border-width: 24px;
   padding: var(--em-border-width);
   border-radius: 16px;
   border: 0;
-  border-radius: 16px;
-  border: 2px solid rgba(255,255,255,0.15);
   background:
     linear-gradient(120deg,
-      rgba(62, 224, 255, 0.42),
-      rgba(130, 102, 255, 0.4),
-      rgba(255, 86, 191, 0.38),
-      rgba(255, 185, 92, 0.38),
-      rgba(62, 224, 255, 0.42)) border-box;
+      rgba(62, 224, 255, 0.22),
+      rgba(130, 102, 255, 0.2),
+      rgba(255, 86, 191, 0.2),
+      rgba(255, 185, 92, 0.2),
+      rgba(62, 224, 255, 0.22)) border-box;
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   box-shadow:
-    inset 0 0 var(--em-aura-blur) rgba(130,102,255,0.34),
-    inset 0 0 calc(var(--em-aura-blur) * 2) rgba(62,224,255,0.2),
-    0 0 26px rgba(130,102,255,0.25),
-    0 0 44px rgba(255,86,191,0.18);
+    inset 0 24px calc(var(--em-aura-blur) * 1.35) rgba(62,224,255,0.2),
+    inset 0 -18px calc(var(--em-aura-blur) * 1.1) rgba(255,86,191,0.17),
+    inset 20px 0 calc(var(--em-aura-blur) * 1.1) rgba(130,102,255,0.17),
+    inset -20px 0 calc(var(--em-aura-blur) * 1.1) rgba(255,185,92,0.16),
+    0 0 42px rgba(130,102,255,0.2);
   animation: editModeAuraShift 14s linear infinite;
 }
 
@@ -110,8 +109,6 @@ body.edit-mode-active {
     linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  border-radius: 18px;
-  pointer-events: none;
 }
 
 .edit-mode-frame::before {
@@ -121,19 +118,19 @@ body.edit-mode-active {
     rgba(255,86,191,var(--em-aura-opacity)),
     rgba(255,185,92,var(--em-aura-opacity)),
     rgba(62,224,255,var(--em-aura-opacity)));
-  filter: blur(16px) saturate(140%);
-  opacity: 0.52;
+  filter: blur(28px) saturate(132%);
+  opacity: 0.4;
   animation: editModeAuraSpin 8.5s linear infinite;
 }
 
 .edit-mode-frame::after {
   background:
-    radial-gradient(120% 60% at 50% 0%, rgba(62,224,255,0.35), transparent 70%),
-    radial-gradient(100% 60% at 50% 100%, rgba(255,86,191,0.32), transparent 70%),
-    radial-gradient(70% 140% at 0% 50%, rgba(130,102,255,0.3), transparent 70%),
-    radial-gradient(70% 140% at 100% 50%, rgba(255,185,92,0.28), transparent 70%);
-  filter: blur(22px);
-  opacity: 0.55;
+    radial-gradient(130% 72% at 50% -6%, rgba(62,224,255,0.42), transparent 78%),
+    radial-gradient(115% 72% at 50% 106%, rgba(255,86,191,0.34), transparent 79%),
+    radial-gradient(85% 170% at -7% 50%, rgba(130,102,255,0.34), transparent 77%),
+    radial-gradient(85% 170% at 107% 50%, rgba(255,185,92,0.32), transparent 77%);
+  filter: blur(34px);
+  opacity: 0.48;
   animation: editModeAuraPulse 3.4s ease-in-out infinite;
 }
 
