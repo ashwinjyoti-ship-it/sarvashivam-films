@@ -61,92 +61,70 @@ body.edit-mode-active {
   padding-top: 52px;
 }
 
-/* Thick colour-cycling aura around the full viewport in edit mode */
+/* True aura: soft ambient bleed with no rigid frame */
 .edit-mode-frame {
   position: fixed;
   inset: 0;
   z-index: 2147483643;
   pointer-events: none;
   box-sizing: border-box;
-  --em-aura-opacity: 0.6;
-  --em-aura-blur: 34px;
-  --em-edge-size: 28px;
-  --em-border-width: 24px;
-  padding: var(--em-border-width);
-  border-radius: 16px;
   border: 0;
   background:
-    linear-gradient(120deg,
-      rgba(62, 224, 255, 0.22),
-      rgba(130, 102, 255, 0.2),
-      rgba(255, 86, 191, 0.2),
-      rgba(255, 185, 92, 0.2),
-      rgba(62, 224, 255, 0.22)) border-box;
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  box-shadow:
-    inset 0 24px calc(var(--em-aura-blur) * 1.35) rgba(62,224,255,0.2),
-    inset 0 -18px calc(var(--em-aura-blur) * 1.1) rgba(255,86,191,0.17),
-    inset 20px 0 calc(var(--em-aura-blur) * 1.1) rgba(130,102,255,0.17),
-    inset -20px 0 calc(var(--em-aura-blur) * 1.1) rgba(255,185,92,0.16),
-    0 0 42px rgba(130,102,255,0.2);
-  animation: editModeAuraShift 14s linear infinite;
+    radial-gradient(130% 58% at 50% -14%, rgba(62,224,255,0.18), transparent 72%),
+    radial-gradient(130% 58% at 50% 114%, rgba(255,86,191,0.14), transparent 75%),
+    radial-gradient(68% 170% at -12% 50%, rgba(130,102,255,0.2), transparent 74%),
+    radial-gradient(68% 170% at 112% 50%, rgba(255,185,92,0.16), transparent 74%);
+  filter: saturate(120%);
+  opacity: 0.95;
+  animation: editModeAuraShift 18s linear infinite;
 }
 
 .edit-mode-frame::before,
 .edit-mode-frame::after {
   content: '';
   position: absolute;
-  inset: calc(-1 * var(--em-edge-size));
-  padding: calc(var(--em-border-width) + var(--em-edge-size));
-  border-radius: 18px;
+  inset: -4%;
+  border-radius: 24px;
   pointer-events: none;
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
 }
 
 .edit-mode-frame::before {
-  background: conic-gradient(from 0deg,
-    rgba(62,224,255,var(--em-aura-opacity)),
-    rgba(130,102,255,var(--em-aura-opacity)),
-    rgba(255,86,191,var(--em-aura-opacity)),
-    rgba(255,185,92,var(--em-aura-opacity)),
-    rgba(62,224,255,var(--em-aura-opacity)));
-  filter: blur(28px) saturate(132%);
-  opacity: 0.4;
-  animation: editModeAuraSpin 8.5s linear infinite;
+  background:
+    radial-gradient(44% 44% at 8% 10%, rgba(62,224,255,0.22), transparent 72%),
+    radial-gradient(42% 42% at 92% 8%, rgba(130,102,255,0.2), transparent 72%),
+    radial-gradient(44% 44% at 10% 92%, rgba(255,86,191,0.2), transparent 74%),
+    radial-gradient(42% 42% at 92% 92%, rgba(255,185,92,0.18), transparent 74%);
+  filter: blur(44px);
+  opacity: 0.58;
+  animation: editModeAuraPulse 5s ease-in-out infinite;
 }
 
 .edit-mode-frame::after {
   background:
-    radial-gradient(130% 72% at 50% -6%, rgba(62,224,255,0.42), transparent 78%),
-    radial-gradient(115% 72% at 50% 106%, rgba(255,86,191,0.34), transparent 79%),
-    radial-gradient(85% 170% at -7% 50%, rgba(130,102,255,0.34), transparent 77%),
-    radial-gradient(85% 170% at 107% 50%, rgba(255,185,92,0.32), transparent 77%);
-  filter: blur(34px);
-  opacity: 0.48;
-  animation: editModeAuraPulse 3.4s ease-in-out infinite;
+    conic-gradient(from 20deg at 50% 50%,
+      rgba(62,224,255,0.18),
+      rgba(130,102,255,0.16),
+      rgba(255,86,191,0.14),
+      rgba(255,185,92,0.14),
+      rgba(62,224,255,0.18));
+  filter: blur(56px);
+  opacity: 0.38;
+  animation: editModeAuraSpin 24s linear infinite;
 }
 
 @keyframes editModeAuraShift {
-  0% { filter: hue-rotate(0deg) saturate(110%); }
-  50% { filter: hue-rotate(180deg) saturate(135%); }
-  100% { filter: hue-rotate(360deg) saturate(110%); }
+  0% { filter: hue-rotate(0deg) saturate(116%); }
+  50% { filter: hue-rotate(180deg) saturate(130%); }
+  100% { filter: hue-rotate(360deg) saturate(116%); }
 }
 
 @keyframes editModeAuraSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from { transform: rotate(0deg) scale(1); }
+  to { transform: rotate(360deg) scale(1.03); }
 }
 
 @keyframes editModeAuraPulse {
-  0%, 100% { opacity: 0.4; }
+  0%, 100% { opacity: 0.46; }
   50% { opacity: 0.7; }
 }
 @media (prefers-reduced-motion: reduce) {
