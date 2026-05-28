@@ -75,6 +75,8 @@ body.edit-mode-active {
   padding: var(--em-border-width);
   border-radius: 16px;
   border: 0;
+  border-radius: 16px;
+  border: 2px solid rgba(255,255,255,0.15);
   background:
     linear-gradient(120deg,
       rgba(62, 224, 255, 0.42),
@@ -108,6 +110,8 @@ body.edit-mode-active {
     linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
+  border-radius: 18px;
+  pointer-events: none;
 }
 
 .edit-mode-frame::before {
