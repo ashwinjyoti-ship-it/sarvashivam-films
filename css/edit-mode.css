@@ -61,7 +61,7 @@ body.edit-mode-active {
   padding-top: 52px;
 }
 
-/* True aura: soft ambient bleed with no rigid frame */
+/* True aura: tighter ambient edge glow with richer color */
 .edit-mode-frame {
   position: fixed;
   inset: 0;
@@ -70,13 +70,13 @@ body.edit-mode-active {
   box-sizing: border-box;
   border: 0;
   background:
-    radial-gradient(130% 58% at 50% -14%, rgba(62,224,255,0.18), transparent 72%),
-    radial-gradient(130% 58% at 50% 114%, rgba(255,86,191,0.14), transparent 75%),
-    radial-gradient(68% 170% at -12% 50%, rgba(130,102,255,0.2), transparent 74%),
-    radial-gradient(68% 170% at 112% 50%, rgba(255,185,92,0.16), transparent 74%);
-  filter: saturate(120%);
-  opacity: 0.95;
-  animation: editModeAuraShift 18s linear infinite;
+    radial-gradient(78% 26% at 50% -8%, rgba(62,224,255,0.34), transparent 58%),
+    radial-gradient(78% 26% at 50% 108%, rgba(255,86,191,0.3), transparent 58%),
+    radial-gradient(26% 96% at -5% 50%, rgba(130,102,255,0.36), transparent 56%),
+    radial-gradient(26% 96% at 105% 50%, rgba(255,185,92,0.34), transparent 56%);
+  filter: saturate(148%) contrast(110%);
+  opacity: 0.9;
+  animation: editModeAuraShift 16s linear infinite;
 }
 
 .edit-mode-frame::before,
@@ -90,26 +90,26 @@ body.edit-mode-active {
 
 .edit-mode-frame::before {
   background:
-    radial-gradient(44% 44% at 8% 10%, rgba(62,224,255,0.22), transparent 72%),
-    radial-gradient(42% 42% at 92% 8%, rgba(130,102,255,0.2), transparent 72%),
-    radial-gradient(44% 44% at 10% 92%, rgba(255,86,191,0.2), transparent 74%),
-    radial-gradient(42% 42% at 92% 92%, rgba(255,185,92,0.18), transparent 74%);
-  filter: blur(44px);
-  opacity: 0.58;
-  animation: editModeAuraPulse 5s ease-in-out infinite;
+    radial-gradient(30% 30% at 7% 9%, rgba(62,224,255,0.4), transparent 64%),
+    radial-gradient(30% 30% at 93% 8%, rgba(130,102,255,0.38), transparent 64%),
+    radial-gradient(30% 30% at 8% 92%, rgba(255,86,191,0.36), transparent 64%),
+    radial-gradient(30% 30% at 93% 92%, rgba(255,185,92,0.34), transparent 64%);
+  filter: blur(34px);
+  opacity: 0.5;
+  animation: editModeAuraPulse 4.5s ease-in-out infinite;
 }
 
 .edit-mode-frame::after {
   background:
-    conic-gradient(from 20deg at 50% 50%,
-      rgba(62,224,255,0.18),
-      rgba(130,102,255,0.16),
-      rgba(255,86,191,0.14),
-      rgba(255,185,92,0.14),
-      rgba(62,224,255,0.18));
-  filter: blur(56px);
-  opacity: 0.38;
-  animation: editModeAuraSpin 24s linear infinite;
+    conic-gradient(from 30deg at 50% 50%,
+      rgba(62,224,255,0.24),
+      rgba(130,102,255,0.22),
+      rgba(255,86,191,0.2),
+      rgba(255,185,92,0.22),
+      rgba(62,224,255,0.24));
+  filter: blur(46px);
+  opacity: 0.26;
+  animation: editModeAuraSpin 20s linear infinite;
 }
 
 @keyframes editModeAuraShift {
