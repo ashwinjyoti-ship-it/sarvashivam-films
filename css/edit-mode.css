@@ -61,26 +61,76 @@ body.edit-mode-active {
   padding-top: 52px;
 }
 
-/* Thick colour-cycling aura around the full viewport in edit mode */
+/* True aura: soft ambient bleed with no rigid frame */
 .edit-mode-frame {
   position: fixed;
   inset: 0;
   z-index: 2147483643;
   pointer-events: none;
   box-sizing: border-box;
-  border: 6px solid #b8a06a;
-  box-shadow:
-    inset 0 0 32px rgba(184,160,106,0.18),
-    inset 0 0 90px rgba(184,160,106,0.08);
-  animation: editModeAura 10s linear infinite;
+  border: 0;
+  background:
+    radial-gradient(130% 58% at 50% -14%, rgba(62,224,255,0.18), transparent 72%),
+    radial-gradient(130% 58% at 50% 114%, rgba(255,86,191,0.14), transparent 75%),
+    radial-gradient(68% 170% at -12% 50%, rgba(130,102,255,0.2), transparent 74%),
+    radial-gradient(68% 170% at 112% 50%, rgba(255,185,92,0.16), transparent 74%);
+  filter: saturate(120%);
+  opacity: 0.95;
+  animation: editModeAuraShift 18s linear infinite;
 }
-.edit-mode-frame::before { content: none; }
-@keyframes editModeAura {
-  from { filter: hue-rotate(0deg); }
-  to   { filter: hue-rotate(360deg); }
+
+.edit-mode-frame::before,
+.edit-mode-frame::after {
+  content: '';
+  position: absolute;
+  inset: -4%;
+  border-radius: 24px;
+  pointer-events: none;
+}
+
+.edit-mode-frame::before {
+  background:
+    radial-gradient(44% 44% at 8% 10%, rgba(62,224,255,0.22), transparent 72%),
+    radial-gradient(42% 42% at 92% 8%, rgba(130,102,255,0.2), transparent 72%),
+    radial-gradient(44% 44% at 10% 92%, rgba(255,86,191,0.2), transparent 74%),
+    radial-gradient(42% 42% at 92% 92%, rgba(255,185,92,0.18), transparent 74%);
+  filter: blur(44px);
+  opacity: 0.58;
+  animation: editModeAuraPulse 5s ease-in-out infinite;
+}
+
+.edit-mode-frame::after {
+  background:
+    conic-gradient(from 20deg at 50% 50%,
+      rgba(62,224,255,0.18),
+      rgba(130,102,255,0.16),
+      rgba(255,86,191,0.14),
+      rgba(255,185,92,0.14),
+      rgba(62,224,255,0.18));
+  filter: blur(56px);
+  opacity: 0.38;
+  animation: editModeAuraSpin 24s linear infinite;
+}
+
+@keyframes editModeAuraShift {
+  0% { filter: hue-rotate(0deg) saturate(116%); }
+  50% { filter: hue-rotate(180deg) saturate(130%); }
+  100% { filter: hue-rotate(360deg) saturate(116%); }
+}
+
+@keyframes editModeAuraSpin {
+  from { transform: rotate(0deg) scale(1); }
+  to { transform: rotate(360deg) scale(1.03); }
+}
+
+@keyframes editModeAuraPulse {
+  0%, 100% { opacity: 0.46; }
+  50% { opacity: 0.7; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .edit-mode-frame { animation: none; }
+  .edit-mode-frame,
+  .edit-mode-frame::before,
+  .edit-mode-frame::after { animation: none; }
 }
 
 /* Editable element outlines */
@@ -130,6 +180,13 @@ body.edit-mode-active {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.edit-popup-helper {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.73rem;
+  line-height: 1.4;
+  color: #a8c8d1;
+  margin-bottom: 10px;
 }
 .edit-popup-textarea {
   width: 100%;
@@ -213,6 +270,39 @@ body.edit-mode-active {
 .edit-popup-btn-save:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.edit-popup-btn-go {
+  background: rgba(62,224,255,0.15);
+  border-color: rgba(62,224,255,0.45);
+  color: #d3f8ff;
+}
+.edit-popup-btn-go:hover {
+  background: rgba(62,224,255,0.27);
+  border-color: rgba(62,224,255,0.72);
+}
+
+@media (max-width: 760px) {
+  .edit-mode-bar {
+    padding: 10px 12px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .edit-mode-bar-left { gap: 10px; }
+  .edit-mode-bar-label { font-size: 0.72rem; letter-spacing: 0.12em; }
+  body.edit-mode-active { padding-top: 74px; }
+
+  .edit-popup {
+    width: min(94vw, 440px);
+    left: 50% !important;
+    right: auto;
+    transform: translateX(-50%);
+  }
+
+  .edit-popup-textarea {
+    min-height: 96px;
+    font-size: 16px;
+  }
 }
 
 /* Fallback notice (shown when API is unreachable) */

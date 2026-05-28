@@ -114,6 +114,13 @@
     keyLabel.className = 'edit-popup-key';
     keyLabel.textContent = key;
 
+    var helper = null;
+    if (target && target.tagName === 'A') {
+      helper = document.createElement('div');
+      helper.className = 'edit-popup-helper';
+      helper.textContent = 'Editing label only. Link destination stays the same.';
+    }
+
     var textarea = document.createElement('textarea');
     textarea.className = 'edit-popup-textarea';
     textarea.value = currentValue;
@@ -141,6 +148,20 @@
 
     var actions = document.createElement('div');
     actions.className = 'edit-popup-actions';
+
+    var goBtn = null;
+    if (target && target.tagName === 'A') {
+      goBtn = document.createElement('button');
+      goBtn.className = 'edit-popup-btn edit-popup-btn-go';
+      goBtn.textContent = 'Open Link';
+      goBtn.addEventListener('click', function () {
+        var href = target.getAttribute('href');
+        if (!href) return;
+        try {
+          window.location.assign(href);
+        } catch (e) {}
+      });
+    }
 
     var cancelBtn = document.createElement('button');
     cancelBtn.className = 'edit-popup-btn edit-popup-btn-cancel';
@@ -198,12 +219,14 @@
       });
     });
 
+    if (goBtn) actions.appendChild(goBtn);
     actions.appendChild(cancelBtn);
     actions.appendChild(saveBtn);
     footer.appendChild(counter);
     footer.appendChild(error);
     footer.appendChild(actions);
     popup.appendChild(keyLabel);
+    if (helper) popup.appendChild(helper);
     popup.appendChild(textarea);
     popup.appendChild(footer);
     overlay.appendChild(popup);
@@ -244,6 +267,7 @@
       (function (el) {
         el.classList.add('editable');
         el.addEventListener('click', function (e) {
+          if (el.tagName === 'A') e.preventDefault();
           if (activePopup) {
             if (activePopup.target === el) return;
             closePopup();
