@@ -114,6 +114,13 @@
     keyLabel.className = 'edit-popup-key';
     keyLabel.textContent = key;
 
+    var helper = null;
+    if (target && target.tagName === 'A') {
+      helper = document.createElement('div');
+      helper.className = 'edit-popup-helper';
+      helper.textContent = 'Editing label only. Link destination stays the same.';
+    }
+
     var textarea = document.createElement('textarea');
     textarea.className = 'edit-popup-textarea';
     textarea.value = currentValue;
@@ -219,6 +226,7 @@
     footer.appendChild(error);
     footer.appendChild(actions);
     popup.appendChild(keyLabel);
+    if (helper) popup.appendChild(helper);
     popup.appendChild(textarea);
     popup.appendChild(footer);
     overlay.appendChild(popup);

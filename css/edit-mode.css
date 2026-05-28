@@ -71,6 +71,10 @@ body.edit-mode-active {
   --em-aura-opacity: 0.78;
   --em-aura-blur: 22px;
   --em-edge-size: 12px;
+  --em-border-width: 16px;
+  padding: var(--em-border-width);
+  border-radius: 16px;
+  border: 0;
   border-radius: 16px;
   border: 2px solid rgba(255,255,255,0.15);
   background:
@@ -80,6 +84,11 @@ body.edit-mode-active {
       rgba(255, 86, 191, 0.38),
       rgba(255, 185, 92, 0.38),
       rgba(62, 224, 255, 0.42)) border-box;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   box-shadow:
     inset 0 0 var(--em-aura-blur) rgba(130,102,255,0.34),
     inset 0 0 calc(var(--em-aura-blur) * 2) rgba(62,224,255,0.2),
@@ -93,6 +102,14 @@ body.edit-mode-active {
   content: '';
   position: absolute;
   inset: calc(-1 * var(--em-edge-size));
+  padding: calc(var(--em-border-width) + var(--em-edge-size));
+  border-radius: 18px;
+  pointer-events: none;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   border-radius: 18px;
   pointer-events: none;
 }
@@ -188,6 +205,13 @@ body.edit-mode-active {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.edit-popup-helper {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.73rem;
+  line-height: 1.4;
+  color: #a8c8d1;
+  margin-bottom: 10px;
 }
 .edit-popup-textarea {
   width: 100%;
