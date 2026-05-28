@@ -68,19 +68,90 @@ body.edit-mode-active {
   z-index: 2147483643;
   pointer-events: none;
   box-sizing: border-box;
-  border: 6px solid #b8a06a;
+  --em-aura-opacity: 0.78;
+  --em-aura-blur: 22px;
+  --em-edge-size: 12px;
+  --em-border-width: 16px;
+  padding: var(--em-border-width);
+  border-radius: 16px;
+  border: 0;
+  background:
+    linear-gradient(120deg,
+      rgba(62, 224, 255, 0.42),
+      rgba(130, 102, 255, 0.4),
+      rgba(255, 86, 191, 0.38),
+      rgba(255, 185, 92, 0.38),
+      rgba(62, 224, 255, 0.42)) border-box;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   box-shadow:
-    inset 0 0 32px rgba(184,160,106,0.18),
-    inset 0 0 90px rgba(184,160,106,0.08);
-  animation: editModeAura 10s linear infinite;
+    inset 0 0 var(--em-aura-blur) rgba(130,102,255,0.34),
+    inset 0 0 calc(var(--em-aura-blur) * 2) rgba(62,224,255,0.2),
+    0 0 26px rgba(130,102,255,0.25),
+    0 0 44px rgba(255,86,191,0.18);
+  animation: editModeAuraShift 14s linear infinite;
 }
-.edit-mode-frame::before { content: none; }
-@keyframes editModeAura {
-  from { filter: hue-rotate(0deg); }
-  to   { filter: hue-rotate(360deg); }
+
+.edit-mode-frame::before,
+.edit-mode-frame::after {
+  content: '';
+  position: absolute;
+  inset: calc(-1 * var(--em-edge-size));
+  padding: calc(var(--em-border-width) + var(--em-edge-size));
+  border-radius: 18px;
+  pointer-events: none;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.edit-mode-frame::before {
+  background: conic-gradient(from 0deg,
+    rgba(62,224,255,var(--em-aura-opacity)),
+    rgba(130,102,255,var(--em-aura-opacity)),
+    rgba(255,86,191,var(--em-aura-opacity)),
+    rgba(255,185,92,var(--em-aura-opacity)),
+    rgba(62,224,255,var(--em-aura-opacity)));
+  filter: blur(16px) saturate(140%);
+  opacity: 0.52;
+  animation: editModeAuraSpin 8.5s linear infinite;
+}
+
+.edit-mode-frame::after {
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba(62,224,255,0.35), transparent 70%),
+    radial-gradient(100% 60% at 50% 100%, rgba(255,86,191,0.32), transparent 70%),
+    radial-gradient(70% 140% at 0% 50%, rgba(130,102,255,0.3), transparent 70%),
+    radial-gradient(70% 140% at 100% 50%, rgba(255,185,92,0.28), transparent 70%);
+  filter: blur(22px);
+  opacity: 0.55;
+  animation: editModeAuraPulse 3.4s ease-in-out infinite;
+}
+
+@keyframes editModeAuraShift {
+  0% { filter: hue-rotate(0deg) saturate(110%); }
+  50% { filter: hue-rotate(180deg) saturate(135%); }
+  100% { filter: hue-rotate(360deg) saturate(110%); }
+}
+
+@keyframes editModeAuraSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes editModeAuraPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .edit-mode-frame { animation: none; }
+  .edit-mode-frame,
+  .edit-mode-frame::before,
+  .edit-mode-frame::after { animation: none; }
 }
 
 /* Editable element outlines */
@@ -130,6 +201,13 @@ body.edit-mode-active {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.edit-popup-helper {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.73rem;
+  line-height: 1.4;
+  color: #a8c8d1;
+  margin-bottom: 10px;
 }
 .edit-popup-textarea {
   width: 100%;
@@ -213,6 +291,39 @@ body.edit-mode-active {
 .edit-popup-btn-save:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.edit-popup-btn-go {
+  background: rgba(62,224,255,0.15);
+  border-color: rgba(62,224,255,0.45);
+  color: #d3f8ff;
+}
+.edit-popup-btn-go:hover {
+  background: rgba(62,224,255,0.27);
+  border-color: rgba(62,224,255,0.72);
+}
+
+@media (max-width: 760px) {
+  .edit-mode-bar {
+    padding: 10px 12px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .edit-mode-bar-left { gap: 10px; }
+  .edit-mode-bar-label { font-size: 0.72rem; letter-spacing: 0.12em; }
+  body.edit-mode-active { padding-top: 74px; }
+
+  .edit-popup {
+    width: min(94vw, 440px);
+    left: 50% !important;
+    right: auto;
+    transform: translateX(-50%);
+  }
+
+  .edit-popup-textarea {
+    min-height: 96px;
+    font-size: 16px;
+  }
 }
 
 /* Fallback notice (shown when API is unreachable) */

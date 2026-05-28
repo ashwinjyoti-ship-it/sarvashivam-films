@@ -90,6 +90,11 @@
       const href = link.getAttribute('href');
       if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('http')) return;
       link.addEventListener('click', function (event) {
+        if (isEdit && link.hasAttribute('data-site-key')) {
+          event.preventDefault();
+          return;
+        }
+
         const url = new URL(link.href, window.location.href);
         if (url.origin !== window.location.origin) return;
         if (url.pathname === window.location.pathname) return;
