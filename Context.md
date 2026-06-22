@@ -108,7 +108,7 @@ functions/api/
 - Click any `[data-site-key]` element → inline popup with textarea + char counter + save (PUT `/api/admin/site-content`)
 - `patchNavLinks()` appends `?edit=1` to all relative links so edit mode persists across page navigations
 - While editing, clicks on `[data-site-key]` links open the inline editor instead of navigating; use the edit bar's "Back to Admin" control to return to `admin.html#content`
-- On edit entry, `site-content.js` sets `sessionStorage` key `ss_skip_maun` so the home preloader is skipped
+- Admin/internal edit navigation sets `sessionStorage` key `ss_skip_maun` so the home preloader is skipped; a direct `index.html?edit=1` load can still show the preloader before edit mode activates because `transition.js` runs before `site-content.js`
 - `Done Editing` button: tries `window.close()`, falls back to `admin.html#content`
 - Styles in `css/edit-mode.css`; `prefers-reduced-motion` supported
 

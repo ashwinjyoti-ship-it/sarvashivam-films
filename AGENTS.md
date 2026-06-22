@@ -26,6 +26,6 @@ There are no automated tests, no linter config, and no CI test step. The deploy 
 
 - The home page has a preloader animation (~2.4 s) on first visit; it is skipped on subsequent navigations via `sessionStorage`.
 - Page transitions use a 2.4 s overlay before `location.assign`; wait for the transition to complete before asserting page content in automated checks.
-- Edit mode (`?edit=1`, valid admin token required) skips both the transition overlay and the home preloader for faster CMS-style navigation.
+- Edit mode (`?edit=1`, valid admin token required) skips the transition overlay for faster CMS-style navigation. Admin/internal edit navigation also skips the home preloader; a direct `index.html?edit=1` load can still show it before edit mode activates.
 - Transition words are D1-backed (`transition_words`) with a hardcoded fallback in `js/transition.js`; migrations are not auto-applied on deploy.
 - `about.html` is labeled "Intent" in the nav — not "About".
